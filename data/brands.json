@@ -11,41 +11,47 @@
     "name": "Omega",
     "founded": 1848,
     "country": "CH",
-    "logo": "logo.png"
+    "logo": "logo.png",
+    "comingSoon": true
   },
   {
     "id": "patek-philippe",
     "name": "Patek Philippe",
     "founded": 1839,
     "country": "CH",
-    "logo": "logo.png"
+    "logo": "logo.png",
+    "comingSoon": true
   },
   {
     "id": "audemars-piguet",
     "name": "Audemars Piguet",
     "founded": 1875,
     "country": "CH",
-    "logo": "logo.png"
+    "logo": "logo.svg",
+    "comingSoon": true
   },
   {
     "id": "jaeger-lecoultre",
     "name": "Jaeger-LeCoultre",
     "founded": 1833,
     "country": "CH",
-    "logo": "logo.png"
+    "logo": "logo.png",
+    "comingSoon": true
   },
   {
     "id": "cartier",
     "name": "Cartier",
     "founded": 1847,
     "country": "FR",
-    "logo": "logo.svg"
+    "logo": "logo.svg",
+    "comingSoon": true
   },
   {
     "id": "grand-seiko",
     "name": "Grand Seiko",
     "founded": 1960,
     "country": "JP",
-    "logo": "logo.svg"
+    "logo": "logo.svg",
+    "comingSoon": true
   }
 ]

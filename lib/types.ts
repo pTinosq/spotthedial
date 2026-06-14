@@ -6,6 +6,8 @@ export type Brand = {
   country: string;
   /** Logo filename inside `public/brands/<id>/` (e.g. "logo.svg", "logo.png"). Omit for typographic fallback. */
   logo?: string;
+  /** Marks the brand as not yet built — disables the home link and shows a placeholder on its page. */
+  comingSoon?: boolean;
 };
 
 export type BrandView = Brand & {

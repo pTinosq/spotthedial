@@ -47,12 +47,23 @@ export default async function BrandPage({
           <img
             src={brand.logoSrc}
             alt=""
-            className="h-12 max-w-[180px] object-contain sm:h-16"
+            className={`h-12 max-w-[180px] object-contain sm:h-16 ${brand.comingSoon ? "grayscale opacity-50" : ""}`}
           />
         ) : null}
       </header>
 
-      <section>
+      {brand.comingSoon ? (
+        <section className="border-t border-rule pt-16">
+          <p className="text-xs uppercase tracking-[0.18em] text-muted">
+            Coming soon
+          </p>
+          <p className="mt-4 max-w-md text-base text-muted leading-relaxed">
+            {brand.name} hasn&apos;t been drawn up yet. Check back as new
+            brands come online.
+          </p>
+        </section>
+      ) : (
+        <section>
         <div className="flex items-baseline justify-between border-b border-rule pb-3 mb-6">
           <h2 className="text-xs uppercase tracking-[0.18em] text-muted">
             Models
@@ -86,6 +97,7 @@ export default async function BrandPage({
           </ul>
         )}
       </section>
+      )}
     </main>
   );
 }

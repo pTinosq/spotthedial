@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { CircleFlag } from "react-circle-flags";
 import { getBrands } from "@/lib/data";
+import type { BrandView } from "@/lib/types";
 
 export default function Home() {
   const brands = getBrands();
@@ -30,46 +31,75 @@ export default function Home() {
         <ul className="grid grid-cols-2 gap-px bg-rule sm:grid-cols-3 border border-rule">
           {brands.map((brand) => (
             <li key={brand.id} className="bg-background">
-              <Link
-                href={`/brands/${brand.id}`}
-                aria-label={brand.name}
-                className="group relative block aspect-square"
-              >
-                <span className="absolute inset-0 flex items-center justify-center p-6 transition-opacity duration-300 group-hover:opacity-0">
-                  {brand.logoSrc ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={brand.logoSrc}
-                      alt=""
-                      className="max-h-[55%] max-w-[70%] object-contain"
-                    />
-                  ) : (
-                    <span className="font-serif text-2xl tracking-tight text-foreground/80 sm:text-3xl">
-                      {brand.name}
-                    </span>
-                  )}
-                </span>
-
-                <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                  <span className="font-serif text-2xl tracking-tight sm:text-3xl">
-                    {brand.name}
-                  </span>
-                  <span className="flex items-center gap-2 text-xs text-muted">
-                    <span className="tabular-nums">{brand.founded}</span>
-                    <CircleFlag
-                      countryCode={brand.countryCode}
-                      height={14}
-                      width={14}
-                      className="inline-block"
-                    />
-                    <span>{brand.countryName}</span>
-                  </span>
-                </span>
-              </Link>
+              <BrandCard brand={brand} />
             </li>
           ))}
         </ul>
       </section>
     </main>
+  );
+}
+
+function BrandCard({ brand }: { brand: BrandView }) {
+  const cardClass = "group relative block aspect-square";
+
+  if (brand.comingSoon) {
+    return (
+      <div
+        aria-disabled
+        aria-label={`${brand.name} — coming soon`}
+        className={`${cardClass} cursor-not-allowed opacity-50 grayscale`}
+      >
+        <BrandFace brand={brand} />
+        <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <span className="font-serif text-2xl tracking-tight sm:text-3xl">
+            {brand.name}
+          </span>
+          <span className="text-xs uppercase tracking-[0.18em] text-muted">
+            Coming soon
+          </span>
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <Link href={`/brands/${brand.id}`} aria-label={brand.name} className={cardClass}>
+      <BrandFace brand={brand} />
+      <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+        <span className="font-serif text-2xl tracking-tight sm:text-3xl">
+          {brand.name}
+        </span>
+        <span className="flex items-center gap-2 text-xs text-muted">
+          <span className="tabular-nums">{brand.founded}</span>
+          <CircleFlag
+            countryCode={brand.countryCode}
+            height={14}
+            width={14}
+            className="inline-block"
+          />
+          <span>{brand.countryName}</span>
+        </span>
+      </span>
+    </Link>
+  );
+}
+
+function BrandFace({ brand }: { brand: BrandView }) {
+  return (
+    <span className="absolute inset-0 flex items-center justify-center p-6 transition-opacity duration-300 group-hover:opacity-0">
+      {brand.logoSrc ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={brand.logoSrc}
+          alt=""
+          className="max-h-[55%] max-w-[70%] object-contain"
+        />
+      ) : (
+        <span className="font-serif text-2xl tracking-tight text-foreground/80 sm:text-3xl">
+          {brand.name}
+        </span>
+      )}
+    </span>
   );
 }
