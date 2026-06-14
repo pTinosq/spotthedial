@@ -3,36 +3,36 @@
     "id": "rolex",
     "name": "Rolex",
     "founded": 1905,
-    "country": "Switzerland"
+    "country": "CH"
   },
   {
     "id": "omega",
     "name": "Omega",
     "founded": 1848,
-    "country": "Switzerland"
+    "country": "CH"
   },
   {
     "id": "patek-philippe",
     "name": "Patek Philippe",
     "founded": 1839,
-    "country": "Switzerland"
+    "country": "CH"
   },
   {
     "id": "audemars-piguet",
     "name": "Audemars Piguet",
     "founded": 1875,
-    "country": "Switzerland"
+    "country": "CH"
   },
   {
     "id": "cartier",
     "name": "Cartier",
     "founded": 1847,
-    "country": "France"
+    "country": "FR"
   },
   {
     "id": "grand-seiko",
     "name": "Grand Seiko",
     "founded": 1960,
-    "country": "Japan"
+    "country": "JP"
   }
 ]

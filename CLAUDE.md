@@ -51,6 +51,8 @@ public/
 
 Data is plain JSON, imported via `resolveJsonModule` and cast to types from `lib/types.ts` in the loader layer (`lib/data.ts`). No CMS, no DB. If a feature would need one, flag it instead of introducing one.
 
+**Brand schema** (`data/brands.json`): `country` is the ISO 3166-1 alpha-2 code in **uppercase** (e.g. `"CH"`, `"FR"`, `"JP"`). The full name is resolved at render time with `Intl.DisplayNames` (no library needed). Circle flags come from `react-circle-flags` — pass the code lowercased to `<CircleFlag countryCode="ch" />`.
+
 **Watch schema** (`data/<brand>/watches.json`):
 ```json
 { "id": "daytona", "name": "Cosmograph Daytona",
