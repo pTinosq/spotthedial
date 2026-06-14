@@ -1,0 +1,32 @@
+[
+  {
+    "id": "submariner",
+    "name": "Submariner",
+    "thumbnail": "submariner/thumbnail.svg",
+    "images": ["submariner/img1.png", "submariner/img2.png"]
+  },
+  {
+    "id": "daytona",
+    "name": "Cosmograph Daytona",
+    "thumbnail": "daytona/thumbnail.svg",
+    "images": ["daytona/img1.png", "daytona/img2.png"]
+  },
+  {
+    "id": "datejust",
+    "name": "Datejust",
+    "thumbnail": "datejust/thumbnail.svg",
+    "images": ["datejust/img1.png", "datejust/img2.png"]
+  },
+  {
+    "id": "gmt-master-ii",
+    "name": "GMT-Master II",
+    "thumbnail": "gmt-master-ii/thumbnail.svg",
+    "images": ["gmt-master-ii/img1.png", "gmt-master-ii/img2.png"]
+  },
+  {
+    "id": "explorer",
+    "name": "Explorer",
+    "thumbnail": "explorer/thumbnail.svg",
+    "images": ["explorer/img1.png", "explorer/img2.png"]
+  }
+]

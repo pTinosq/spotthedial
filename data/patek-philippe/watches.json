@@ -1,0 +1,20 @@
+[
+  {
+    "id": "nautilus",
+    "name": "Nautilus",
+    "thumbnail": "nautilus/thumbnail.svg",
+    "images": ["nautilus/img1.png", "nautilus/img2.png"]
+  },
+  {
+    "id": "aquanaut",
+    "name": "Aquanaut",
+    "thumbnail": "aquanaut/thumbnail.svg",
+    "images": ["aquanaut/img1.png", "aquanaut/img2.png"]
+  },
+  {
+    "id": "calatrava",
+    "name": "Calatrava",
+    "thumbnail": "calatrava/thumbnail.svg",
+    "images": ["calatrava/img1.png", "calatrava/img2.png"]
+  }
+]

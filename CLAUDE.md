@@ -16,29 +16,64 @@ Public side project, solo dev, shipping to Vercel.
 
 ## Commands
 
-- `npm run dev` — dev server on :3000
-- `npm run build` — production build
-- `npm run lint` — eslint (must pass)
-- `npx tsc --noEmit` — typecheck (must pass)
+Package manager is **pnpm** — do not use `npm` or `yarn` (no `package-lock.json`, only `pnpm-lock.yaml`).
+
+Day-to-day commands are wrapped in a `justfile` — prefer `just <recipe>` over typing pnpm directly:
+
+- `just dev` — dev server on :3000
+- `just build` — production build
+- `just lint` — eslint (must pass)
+- `just typecheck` — `tsc --noEmit` (must pass)
+- `just check` — lint + typecheck
+
+When adding a new everyday command, add a recipe to `justfile` rather than asking the user to memorise the pnpm form.
 
 No tests yet. Don't add a test runner until there's real logic to test (quiz scoring, filtering, etc.).
 
 ## Project shape
 
 ```
-app/                Next App Router pages, layouts, route handlers
-data/<brand>/       One folder per brand
-  models.ts         Typed model data for that brand
-  svgs/             Hand-drawn SVG line art, one per model
-public/             Static assets that aren't watch SVGs
+app/                          Next App Router pages, layouts, route handlers
+data/
+  brands.json                 The brand index — loaded by the home page
+  <brand>/
+    watches.json              Array of watches for that brand (brand id is implied by path)
+lib/
+  types.ts                    Brand, Watch types
+  data.ts                     Typed loaders (e.g. getBrands())
+public/
+  watches/<brand>/<model>/    Hand-drawn SVG + supporting images for each model
+    thumbnail.svg
+    img1.png, img2.png, ...
 ```
+
+Data is plain JSON, imported via `resolveJsonModule` and cast to types from `lib/types.ts` in the loader layer (`lib/data.ts`). No CMS, no DB. If a feature would need one, flag it instead of introducing one.
+
+**Watch schema** (`data/<brand>/watches.json`):
+```json
+{ "id": "daytona", "name": "Cosmograph Daytona",
+  "thumbnail": "daytona/thumbnail.svg",
+  "images": ["daytona/img1.png", "daytona/img2.png"] }
+```
+Paths inside the JSON are relative to the brand. The component resolves them to `/watches/<brand>/<path>` (i.e. served from `public/watches/<brand>/...`). Keep the schema minimal — don't add `year`, `family`, `description`, etc. until a feature actually needs them.
 
 The user authors the SVGs by hand (Figma/Illustrator → exported SVG). Treat them as content, not code:
 - Don't regenerate, "optimize," or rewrite them.
-- Don't inline them into JSX. Reference them as files.
-- A new watch model = a new SVG file + a new entry in that brand's `models.ts`.
+- Don't inline them into JSX. Reference them as files via the resolved URL.
+- A new watch model = drop files in `public/watches/<brand>/<model>/` + add an entry to that brand's `watches.json`.
 
-Watch data lives in TS modules — no CMS, no DB. If a feature would need one, flag it instead of introducing one.
+Routing convention: `/brands/[brand]` for a brand's catalog. Home is `/`.
+
+## Design system
+
+Light mode only. Editorial / minimal — whitespace-heavy, hairline rules (`border-rule`), restrained palette:
+
+- `--background` warm off-white `#fbfaf7`
+- `--foreground` near-black `#1a1a1a`
+- `--muted` `#6b6b6b` for metadata
+- `--rule` `#e6e3dc` for hairline dividers
+
+Fonts: **Fraunces** (serif, `font-serif`) for display / brand names; **Geist Sans** (default `font-sans`) for body and metadata. Use `tabular-nums` for years and counts.
 
 ## Design direction
 

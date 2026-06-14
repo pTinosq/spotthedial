@@ -1,0 +1,26 @@
+[
+  {
+    "id": "speedmaster",
+    "name": "Speedmaster",
+    "thumbnail": "speedmaster/thumbnail.svg",
+    "images": ["speedmaster/img1.png", "speedmaster/img2.png"]
+  },
+  {
+    "id": "seamaster-300",
+    "name": "Seamaster 300",
+    "thumbnail": "seamaster-300/thumbnail.svg",
+    "images": ["seamaster-300/img1.png", "seamaster-300/img2.png"]
+  },
+  {
+    "id": "constellation",
+    "name": "Constellation",
+    "thumbnail": "constellation/thumbnail.svg",
+    "images": ["constellation/img1.png", "constellation/img2.png"]
+  },
+  {
+    "id": "de-ville",
+    "name": "De Ville",
+    "thumbnail": "de-ville/thumbnail.svg",
+    "images": ["de-ville/img1.png", "de-ville/img2.png"]
+  }
+]

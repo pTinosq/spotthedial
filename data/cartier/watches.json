@@ -1,0 +1,20 @@
+[
+  {
+    "id": "tank",
+    "name": "Tank",
+    "thumbnail": "tank/thumbnail.svg",
+    "images": ["tank/img1.png", "tank/img2.png"]
+  },
+  {
+    "id": "santos",
+    "name": "Santos",
+    "thumbnail": "santos/thumbnail.svg",
+    "images": ["santos/img1.png", "santos/img2.png"]
+  },
+  {
+    "id": "ballon-bleu",
+    "name": "Ballon Bleu",
+    "thumbnail": "ballon-bleu/thumbnail.svg",
+    "images": ["ballon-bleu/img1.png", "ballon-bleu/img2.png"]
+  }
+]

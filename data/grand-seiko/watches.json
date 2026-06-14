@@ -1,0 +1,20 @@
+[
+  {
+    "id": "snowflake",
+    "name": "Snowflake",
+    "thumbnail": "snowflake/thumbnail.svg",
+    "images": ["snowflake/img1.png", "snowflake/img2.png"]
+  },
+  {
+    "id": "spring-drive",
+    "name": "Spring Drive",
+    "thumbnail": "spring-drive/thumbnail.svg",
+    "images": ["spring-drive/img1.png", "spring-drive/img2.png"]
+  },
+  {
+    "id": "evolution-9",
+    "name": "Evolution 9",
+    "thumbnail": "evolution-9/thumbnail.svg",
+    "images": ["evolution-9/img1.png", "evolution-9/img2.png"]
+  }
+]
