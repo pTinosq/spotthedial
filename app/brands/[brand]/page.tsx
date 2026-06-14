@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CircleFlag } from "react-circle-flags";
+import { Tile } from "@/components/tile";
 import { getBrand, getBrands, getWatches } from "@/lib/data";
 
 export function generateStaticParams() {
@@ -66,20 +67,24 @@ export default async function BrandPage({
         {watches.length === 0 ? (
           <p className="text-sm text-muted">No models yet.</p>
         ) : (
-          <ul className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3">
+          <ul className="grid grid-cols-1 sm:grid-cols-3 border border-rule divide-y divide-rule sm:divide-y-0">
             {watches.map((watch) => (
               <li key={watch.id}>
-                <div className="relative aspect-square overflow-hidden border border-rule">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={watch.thumbnailSrc}
-                    alt=""
-                    className="absolute inset-0 h-full w-full object-cover"
-                  />
-                </div>
-                <p className="mt-3 font-serif text-base tracking-tight sm:text-lg">
-                  {watch.name}
-                </p>
+                <Tile
+                  ariaLabel={watch.name}
+                  thumbnail={
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={watch.thumbnailSrc}
+                      alt=""
+                      className="h-full w-full object-cover"
+                    />
+                  }
+                >
+                  <span className="block font-serif text-xl tracking-tight sm:text-2xl">
+                    {watch.name}
+                  </span>
+                </Tile>
               </li>
             ))}
           </ul>

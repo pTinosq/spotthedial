@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { CircleFlag } from "react-circle-flags";
+import { Tile } from "@/components/tile";
 import { getBrands } from "@/lib/data";
 import type { BrandView } from "@/lib/types";
 
@@ -25,100 +25,39 @@ export default function Home() {
         <ul className="grid grid-cols-1 sm:grid-cols-3 border border-rule divide-y divide-rule sm:divide-y-0">
           {brands.map((brand) => (
             <li key={brand.id}>
-              <BrandCard brand={brand} />
+              <Tile
+                href={`/brands/${brand.id}`}
+                disabled={brand.comingSoon}
+                ariaLabel={
+                  brand.comingSoon ? `${brand.name} — coming soon` : brand.name
+                }
+                thumbnail={<BrandMark brand={brand} />}
+              >
+                <span className="block font-serif text-xl tracking-tight sm:text-2xl">
+                  {brand.name}
+                </span>
+                {brand.comingSoon ? (
+                  <span className="mt-1 block text-xs uppercase tracking-[0.18em] text-muted">
+                    Coming soon
+                  </span>
+                ) : (
+                  <span className="mt-1 flex items-center gap-2 text-xs text-muted sm:justify-center">
+                    <span className="tabular-nums">{brand.founded}</span>
+                    <CircleFlag
+                      countryCode={brand.countryCode}
+                      height={12}
+                      width={12}
+                      className="inline-block"
+                    />
+                    <span>{brand.countryName}</span>
+                  </span>
+                )}
+              </Tile>
             </li>
           ))}
         </ul>
       </section>
     </main>
-  );
-}
-
-function BrandCard({ brand }: { brand: BrandView }) {
-  const inner = <BrandCardInner brand={brand} />;
-
-  if (brand.comingSoon) {
-    return (
-      <div
-        aria-disabled
-        aria-label={`${brand.name} — coming soon`}
-        className="group block cursor-not-allowed opacity-50 grayscale"
-      >
-        {inner}
-      </div>
-    );
-  }
-
-  return (
-    <Link
-      href={`/brands/${brand.id}`}
-      aria-label={brand.name}
-      className="group block"
-    >
-      {inner}
-    </Link>
-  );
-}
-
-function BrandCardInner({ brand }: { brand: BrandView }) {
-  return (
-    <>
-      {/* Mobile: horizontal row */}
-      <span className="flex items-center gap-4 p-4 sm:hidden">
-        <span className="flex h-16 w-16 flex-shrink-0 items-center justify-center">
-          <BrandMark brand={brand} />
-        </span>
-        <span className="min-w-0 flex-1">
-          <span className="block font-serif text-xl tracking-tight">
-            {brand.name}
-          </span>
-          <span className="mt-1 flex items-center gap-2 text-xs text-muted">
-            {brand.comingSoon ? (
-              <span className="uppercase tracking-[0.18em]">Coming soon</span>
-            ) : (
-              <>
-                <span className="tabular-nums">{brand.founded}</span>
-                <CircleFlag
-                  countryCode={brand.countryCode}
-                  height={12}
-                  width={12}
-                  className="inline-block"
-                />
-                <span>{brand.countryName}</span>
-              </>
-            )}
-          </span>
-        </span>
-      </span>
-
-      {/* Desktop: aspect-square hover swap */}
-      <span className="relative hidden aspect-square sm:block">
-        <span className="absolute inset-0 flex items-center justify-center p-6 transition-opacity duration-300 group-hover:opacity-0">
-          <BrandMark brand={brand} />
-        </span>
-        <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 p-6 text-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <span className="font-serif text-2xl tracking-tight sm:text-3xl">
-            {brand.name}
-          </span>
-          {brand.comingSoon ? (
-            <span className="text-xs uppercase tracking-[0.18em] text-muted">
-              Coming soon
-            </span>
-          ) : (
-            <span className="flex items-center gap-2 text-xs text-muted">
-              <span className="tabular-nums">{brand.founded}</span>
-              <CircleFlag
-                countryCode={brand.countryCode}
-                height={14}
-                width={14}
-                className="inline-block"
-              />
-              <span>{brand.countryName}</span>
-            </span>
-          )}
-        </span>
-      </span>
-    </>
   );
 }
 
