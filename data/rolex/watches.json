@@ -43,5 +43,23 @@
       "https://picsum.photos/seed/rolex-explorer-1/1200/1200",
       "https://picsum.photos/seed/rolex-explorer-2/1200/1200"
     ]
+  },
+  {
+    "id": "day-date",
+    "name": "Day-Date",
+    "thumbnail": "day-date/thumbnail.webp",
+    "images": [
+      "https://picsum.photos/seed/rolex-day-date-1/1200/1200",
+      "https://picsum.photos/seed/rolex-day-date-2/1200/1200"
+    ]
+  },
+  {
+    "id": "oyster-perpetual",
+    "name": "Oyster Perpetual",
+    "thumbnail": "oyster-perpetual/thumbnail.webp",
+    "images": [
+      "https://picsum.photos/seed/rolex-oyster-perpetual-1/1200/1200",
+      "https://picsum.photos/seed/rolex-oyster-perpetual-2/1200/1200"
+    ]
   }
 ]
