@@ -2,19 +2,28 @@
   {
     "id": "royal-oak",
     "name": "Royal Oak",
-    "thumbnail": "royal-oak/thumbnail.svg",
-    "images": ["royal-oak/img1.png", "royal-oak/img2.png"]
+    "thumbnail": "https://picsum.photos/seed/ap-royal-oak/600/600",
+    "images": [
+      "https://picsum.photos/seed/ap-royal-oak-1/1200/1200",
+      "https://picsum.photos/seed/ap-royal-oak-2/1200/1200"
+    ]
   },
   {
     "id": "royal-oak-offshore",
     "name": "Royal Oak Offshore",
-    "thumbnail": "royal-oak-offshore/thumbnail.svg",
-    "images": ["royal-oak-offshore/img1.png", "royal-oak-offshore/img2.png"]
+    "thumbnail": "https://picsum.photos/seed/ap-offshore/600/600",
+    "images": [
+      "https://picsum.photos/seed/ap-offshore-1/1200/1200",
+      "https://picsum.photos/seed/ap-offshore-2/1200/1200"
+    ]
   },
   {
     "id": "code-11-59",
     "name": "Code 11.59",
-    "thumbnail": "code-11-59/thumbnail.svg",
-    "images": ["code-11-59/img1.png", "code-11-59/img2.png"]
+    "thumbnail": "https://picsum.photos/seed/ap-code/600/600",
+    "images": [
+      "https://picsum.photos/seed/ap-code-1/1200/1200",
+      "https://picsum.photos/seed/ap-code-2/1200/1200"
+    ]
   }
 ]

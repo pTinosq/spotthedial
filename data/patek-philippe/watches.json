@@ -2,19 +2,28 @@
   {
     "id": "nautilus",
     "name": "Nautilus",
-    "thumbnail": "nautilus/thumbnail.svg",
-    "images": ["nautilus/img1.png", "nautilus/img2.png"]
+    "thumbnail": "https://picsum.photos/seed/patek-nautilus/600/600",
+    "images": [
+      "https://picsum.photos/seed/patek-nautilus-1/1200/1200",
+      "https://picsum.photos/seed/patek-nautilus-2/1200/1200"
+    ]
   },
   {
     "id": "aquanaut",
     "name": "Aquanaut",
-    "thumbnail": "aquanaut/thumbnail.svg",
-    "images": ["aquanaut/img1.png", "aquanaut/img2.png"]
+    "thumbnail": "https://picsum.photos/seed/patek-aquanaut/600/600",
+    "images": [
+      "https://picsum.photos/seed/patek-aquanaut-1/1200/1200",
+      "https://picsum.photos/seed/patek-aquanaut-2/1200/1200"
+    ]
   },
   {
     "id": "calatrava",
     "name": "Calatrava",
-    "thumbnail": "calatrava/thumbnail.svg",
-    "images": ["calatrava/img1.png", "calatrava/img2.png"]
+    "thumbnail": "https://picsum.photos/seed/patek-calatrava/600/600",
+    "images": [
+      "https://picsum.photos/seed/patek-calatrava-1/1200/1200",
+      "https://picsum.photos/seed/patek-calatrava-2/1200/1200"
+    ]
   }
 ]

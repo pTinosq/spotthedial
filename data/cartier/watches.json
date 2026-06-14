@@ -2,19 +2,28 @@
   {
     "id": "tank",
     "name": "Tank",
-    "thumbnail": "tank/thumbnail.svg",
-    "images": ["tank/img1.png", "tank/img2.png"]
+    "thumbnail": "https://picsum.photos/seed/cartier-tank/600/600",
+    "images": [
+      "https://picsum.photos/seed/cartier-tank-1/1200/1200",
+      "https://picsum.photos/seed/cartier-tank-2/1200/1200"
+    ]
   },
   {
     "id": "santos",
     "name": "Santos",
-    "thumbnail": "santos/thumbnail.svg",
-    "images": ["santos/img1.png", "santos/img2.png"]
+    "thumbnail": "https://picsum.photos/seed/cartier-santos/600/600",
+    "images": [
+      "https://picsum.photos/seed/cartier-santos-1/1200/1200",
+      "https://picsum.photos/seed/cartier-santos-2/1200/1200"
+    ]
   },
   {
     "id": "ballon-bleu",
     "name": "Ballon Bleu",
-    "thumbnail": "ballon-bleu/thumbnail.svg",
-    "images": ["ballon-bleu/img1.png", "ballon-bleu/img2.png"]
+    "thumbnail": "https://picsum.photos/seed/cartier-ballon/600/600",
+    "images": [
+      "https://picsum.photos/seed/cartier-ballon-1/1200/1200",
+      "https://picsum.photos/seed/cartier-ballon-2/1200/1200"
+    ]
   }
 ]

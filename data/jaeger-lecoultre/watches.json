@@ -1,0 +1,29 @@
+[
+  {
+    "id": "reverso",
+    "name": "Reverso",
+    "thumbnail": "https://picsum.photos/seed/jlc-reverso/600/600",
+    "images": [
+      "https://picsum.photos/seed/jlc-reverso-1/1200/1200",
+      "https://picsum.photos/seed/jlc-reverso-2/1200/1200"
+    ]
+  },
+  {
+    "id": "master-control",
+    "name": "Master Control",
+    "thumbnail": "https://picsum.photos/seed/jlc-master-control/600/600",
+    "images": [
+      "https://picsum.photos/seed/jlc-master-control-1/1200/1200",
+      "https://picsum.photos/seed/jlc-master-control-2/1200/1200"
+    ]
+  },
+  {
+    "id": "polaris",
+    "name": "Polaris",
+    "thumbnail": "https://picsum.photos/seed/jlc-polaris/600/600",
+    "images": [
+      "https://picsum.photos/seed/jlc-polaris-1/1200/1200",
+      "https://picsum.photos/seed/jlc-polaris-2/1200/1200"
+    ]
+  }
+]
