@@ -67,7 +67,7 @@ export default async function BrandPage({
         {watches.length === 0 ? (
           <p className="text-sm text-muted">No models yet.</p>
         ) : (
-          <ul className="grid grid-cols-1 sm:grid-cols-3 border border-rule divide-y divide-rule sm:divide-y-0">
+          <ul className="grid grid-cols-1 sm:grid-cols-3 border border-rule divide-y divide-rule sm:divide-y-0 bg-white">
             {watches.map((watch) => (
               <li key={watch.id}>
                 <Tile
