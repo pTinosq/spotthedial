@@ -19,37 +19,27 @@ export default async function BrandPage({
   const watches = getWatches(brand.id);
 
   return (
-    <main className="mx-auto w-full max-w-4xl px-6 py-24 sm:py-32">
-      <nav className="mb-12 text-xs uppercase tracking-[0.18em] text-muted">
+    <main className="mx-auto w-full max-w-4xl px-6 py-12 sm:py-20">
+      <nav className="mb-8 text-xs uppercase tracking-[0.18em] text-muted">
         <Link href="/" className="hover:text-foreground">
           ← Brands
         </Link>
       </nav>
 
-      <header className="mb-16 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h1 className="font-serif text-4xl sm:text-5xl tracking-tight">
-            {brand.name}
-          </h1>
-          <p className="mt-4 flex items-center gap-2 text-sm text-muted">
-            <span className="tabular-nums">Est. {brand.founded}</span>
-            <CircleFlag
-              countryCode={brand.countryCode}
-              height={14}
-              width={14}
-              className="inline-block"
-            />
-            <span>{brand.countryName}</span>
-          </p>
-        </div>
-        {brand.logoSrc ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={brand.logoSrc}
-            alt=""
-            className={`h-12 max-w-[180px] object-contain sm:h-16 ${brand.comingSoon ? "grayscale opacity-50" : ""}`}
+      <header className="mb-12">
+        <h1 className="font-serif text-4xl sm:text-5xl tracking-tight">
+          {brand.name}
+        </h1>
+        <p className="mt-3 flex items-center gap-2 text-sm text-muted">
+          <span className="tabular-nums">Est. {brand.founded}</span>
+          <CircleFlag
+            countryCode={brand.countryCode}
+            height={14}
+            width={14}
+            className="inline-block"
           />
-        ) : null}
+          <span>{brand.countryName}</span>
+        </p>
       </header>
 
       {brand.comingSoon ? (
@@ -76,22 +66,20 @@ export default async function BrandPage({
         {watches.length === 0 ? (
           <p className="text-sm text-muted">No models yet.</p>
         ) : (
-          <ul className="grid grid-cols-2 gap-px bg-rule sm:grid-cols-3 border border-rule">
+          <ul className="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3">
             {watches.map((watch) => (
-              <li key={watch.id} className="bg-background">
-                <div className="group relative block aspect-square">
+              <li key={watch.id}>
+                <div className="relative aspect-square overflow-hidden border border-rule">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={watch.thumbnailSrc}
                     alt=""
                     className="absolute inset-0 h-full w-full object-cover"
                   />
-                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-background/90 via-background/0 to-background/0 p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-                    <span className="font-serif text-lg tracking-tight">
-                      {watch.name}
-                    </span>
-                  </div>
                 </div>
+                <p className="mt-3 font-serif text-base tracking-tight sm:text-lg">
+                  {watch.name}
+                </p>
               </li>
             ))}
           </ul>
