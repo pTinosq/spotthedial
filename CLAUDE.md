@@ -58,9 +58,10 @@ Data is plain JSON, imported via `resolveJsonModule` and cast to types from `lib
 ```json
 { "id": "daytona", "name": "Cosmograph Daytona",
   "thumbnail": "daytona/thumbnail.svg",
+  "thumbnailTest": "daytona/thumbnail-test.svg",
   "images": ["daytona/img1.png", "daytona/img2.png"] }
 ```
-Paths inside the JSON are relative to the brand. The component resolves them to `/watches/<brand>/<path>` (i.e. served from `public/watches/<brand>/...`). Keep the schema minimal — don't add `year`, `family`, `description`, etc. until a feature actually needs them.
+Paths inside the JSON are relative to the brand. The component resolves them to `/watches/<brand>/<path>` (i.e. served from `public/watches/<brand>/...`). The optional `thumbnailTest` field points at a quiz-friendly variant (identifying text blurred/erased) — when absent, the quiz falls back to `thumbnail`. Keep the rest of the schema minimal — don't add `year`, `family`, `description`, etc. until a feature actually needs them.
 
 The user authors the SVGs by hand (Figma/Illustrator → exported SVG). Treat them as content, not code:
 - Don't regenerate, "optimize," or rewrite them.
