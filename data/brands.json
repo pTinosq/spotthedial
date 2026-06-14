@@ -3,7 +3,8 @@
     "id": "rolex",
     "name": "Rolex",
     "founded": 1905,
-    "country": "CH"
+    "country": "CH",
+    "logo": "logo.png"
   },
   {
     "id": "omega",

@@ -36,10 +36,10 @@ export default function Home() {
                 className="group relative block aspect-square"
               >
                 <span className="absolute inset-0 flex items-center justify-center p-6 transition-opacity duration-300 group-hover:opacity-0">
-                  {brand.hasLogo ? (
+                  {brand.logoSrc ? (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={`/brands/${brand.id}/logo.svg`}
+                      src={brand.logoSrc}
                       alt=""
                       className="max-h-[55%] max-w-[70%] object-contain"
                     />

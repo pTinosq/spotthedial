@@ -4,10 +4,13 @@ export type Brand = {
   founded: number;
   /** ISO 3166-1 alpha-2 country code, uppercase (e.g. "CH", "FR", "JP"). */
   country: string;
+  /** Logo filename inside `public/brands/<id>/` (e.g. "logo.svg", "logo.png"). Omit for typographic fallback. */
+  logo?: string;
 };
 
 export type BrandView = Brand & {
-  hasLogo: boolean;
+  /** Resolved public URL for the logo, or null if none. */
+  logoSrc: string | null;
   countryName: string;
   /** Lowercased ISO code, for `react-circle-flags`. */
   countryCode: string;
