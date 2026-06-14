@@ -25,6 +25,7 @@ Day-to-day commands are wrapped in a `justfile` — prefer `just <recipe>` over 
 - `just lint` — eslint (must pass)
 - `just typecheck` — `tsc --noEmit` (must pass)
 - `just check` — lint + typecheck
+- `just webp` — convert every PNG under `public/` to WebP at q=82 and delete the originals. Requires `cwebp` (one-time: `brew install webp`). Run this **after** dropping any new PNG into `public/`, then update the matching JSON field (`logo`, `thumbnail`, `images`) from `.png` to `.webp`. The loader is extension-agnostic so the rename is the only manual step.
 
 When adding a new everyday command, add a recipe to `justfile` rather than asking the user to memorise the pnpm form.
 

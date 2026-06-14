@@ -2,7 +2,7 @@
   {
     "id": "submariner",
     "name": "Submariner",
-    "thumbnail": "https://picsum.photos/seed/rolex-submariner/600/600",
+    "thumbnail": "submariner/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/rolex-submariner-1/1200/1200",
       "https://picsum.photos/seed/rolex-submariner-2/1200/1200"
@@ -11,7 +11,7 @@
   {
     "id": "daytona",
     "name": "Cosmograph Daytona",
-    "thumbnail": "https://picsum.photos/seed/rolex-daytona/600/600",
+    "thumbnail": "daytona/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/rolex-daytona-1/1200/1200",
       "https://picsum.photos/seed/rolex-daytona-2/1200/1200"
@@ -20,7 +20,7 @@
   {
     "id": "datejust",
     "name": "Datejust",
-    "thumbnail": "https://picsum.photos/seed/rolex-datejust/600/600",
+    "thumbnail": "datejust/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/rolex-datejust-1/1200/1200",
       "https://picsum.photos/seed/rolex-datejust-2/1200/1200"
@@ -29,7 +29,7 @@
   {
     "id": "gmt-master-ii",
     "name": "GMT-Master II",
-    "thumbnail": "https://picsum.photos/seed/rolex-gmt/600/600",
+    "thumbnail": "gmt-master-ii/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/rolex-gmt-1/1200/1200",
       "https://picsum.photos/seed/rolex-gmt-2/1200/1200"
@@ -38,7 +38,7 @@
   {
     "id": "explorer",
     "name": "Explorer",
-    "thumbnail": "https://picsum.photos/seed/rolex-explorer/600/600",
+    "thumbnail": "explorer/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/rolex-explorer-1/1200/1200",
       "https://picsum.photos/seed/rolex-explorer-2/1200/1200"

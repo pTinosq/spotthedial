@@ -4,14 +4,14 @@
     "name": "Rolex",
     "founded": 1905,
     "country": "CH",
-    "logo": "logo.png"
+    "logo": "logo.webp"
   },
   {
     "id": "omega",
     "name": "Omega",
     "founded": 1848,
     "country": "CH",
-    "logo": "logo.png",
+    "logo": "logo.webp",
     "comingSoon": true
   },
   {
@@ -19,7 +19,7 @@
     "name": "Patek Philippe",
     "founded": 1839,
     "country": "CH",
-    "logo": "logo.png",
+    "logo": "logo.webp",
     "comingSoon": true
   },
   {
@@ -35,7 +35,7 @@
     "name": "Jaeger-LeCoultre",
     "founded": 1833,
     "country": "CH",
-    "logo": "logo.png",
+    "logo": "logo.webp",
     "comingSoon": true
   },
   {
