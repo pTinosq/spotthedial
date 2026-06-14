@@ -90,7 +90,7 @@ Brand picker → grid of variant line drawings for that brand → click a varian
 ## How to work on this
 
 - Just do it — make the reasonable call, ship the diff, the user reviews. No long planning rounds for small changes.
-- Lint + typecheck must be clean before declaring done. Run them.
+- Lint + typecheck must be clean before declaring done. For any medium-or-larger change, run `just check` yourself — don't ask, don't skip it, don't hand it off to the user.
 - Don't add backwards-compat shims, feature flags, or speculative abstractions — there are no users yet and no legacy to preserve.
 - Don't pad the repo with READMEs, ADRs, or design docs unless asked.
 - When adding a new brand or model, follow the existing folder convention exactly; if no convention exists yet, establish it cleanly on the first one.

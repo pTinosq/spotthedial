@@ -56,7 +56,6 @@ export default function Home() {
                   </span>
                   <span className="flex items-center gap-2 text-xs text-muted">
                     <span className="tabular-nums">{brand.founded}</span>
-                    <span aria-hidden>·</span>
                     <CircleFlag
                       countryCode={brand.countryCode}
                       height={14}
@@ -64,12 +63,6 @@ export default function Home() {
                       className="inline-block"
                     />
                     <span>{brand.countryName}</span>
-                  </span>
-                  <span
-                    aria-hidden
-                    className="mt-2 text-foreground/50 transition-transform duration-300 group-hover:translate-x-1"
-                  >
-                    →
                   </span>
                 </span>
               </Link>
