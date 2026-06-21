@@ -11,7 +11,7 @@ export default function Home() {
     <main className="mx-auto w-full max-w-4xl px-6 py-12 sm:py-20">
       <div className="mb-16 flex items-baseline justify-between sm:mb-20">
         <p className="font-serif text-xl tracking-tight sm:text-2xl">
-          learnthatwatch
+          Spot the Dial
         </p>
         <Link
           href="/quiz"

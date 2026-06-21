@@ -1,8 +1,8 @@
 @AGENTS.md
 
-# learnthatwatch
+# Spot the Dial
 
-A horology pattern-recognition app. The point isn't a catalog or shop — it's to help someone who loves watches but can't yet *tell them apart at a glance* learn the visual vocabulary. Pick a brand (Rolex, Omega, ...), see hand-drawn line diagrams of its models, and learn to recognize the differences (Oyster vs. Daytona, etc.) from the watchface alone.
+A horology pattern-recognition app (spotthedial.com). The point isn't a catalog or shop — it's to help someone who loves watches but can't yet *tell them apart at a glance* learn the visual vocabulary. Pick a brand (Rolex, Omega, ...), see hand-drawn line diagrams of its models, and learn to recognize the differences (Oyster vs. Daytona, etc.) from the watchface alone.
 
 Public side project, solo dev, shipping to Vercel.
 

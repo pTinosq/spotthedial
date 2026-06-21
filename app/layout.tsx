@@ -14,7 +14,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "learnthatwatch",
+  title: "Spot the Dial",
   description: "Learn to recognise watches by sight.",
 };
 
