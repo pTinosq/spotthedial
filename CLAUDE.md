@@ -25,7 +25,10 @@ Day-to-day commands are wrapped in a `justfile` — prefer `just <recipe>` over 
 - `just lint` — eslint (must pass)
 - `just typecheck` — `tsc --noEmit` (must pass)
 - `just check` — lint + typecheck
+- `just prepare-images <path>` — normalise watch-face images: removes the white background and re-centres the watch on a 2048px transparent canvas with 64px padding, so every watch renders at a consistent size regardless of how the source was cropped. Takes a file or a folder (searched recursively); overwrites in place. Requires Python deps (one-time: `pip3 install pillow numpy`).
 - `just webp` — convert every PNG under `public/` to WebP at q=82 and delete the originals. Requires `cwebp` (one-time: `brew install webp`). Run this **after** dropping any new PNG into `public/`, then update the matching JSON field (`logo`, `thumbnail`, `images`) from `.png` to `.webp`. The loader is extension-agnostic so the rename is the only manual step.
+
+**Every watch image must be run through `just prepare-images` before it ships** — it's what keeps watches the same size on a transparent ground across the catalogue. The pipeline for a new model is: drop the raw image → `just prepare-images <path>` → (if PNG) `just webp`.
 
 When adding a new everyday command, add a recipe to `justfile` rather than asking the user to memorise the pnpm form.
 
