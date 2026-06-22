@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>quiz-prepare · Spot the Dial</title>
+    <style>
+      :root {
+        --bg: #fbfaf7;
+        --fg: #1a1a1a;
+        --muted: #6b6b6b;
+        --rule: #e6e3dc;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--fg);
+        font: 14px/1.5 ui-sans-serif, system-ui, -apple-system, sans-serif;
+        display: flex;
+        justify-content: center;
+        padding: 32px 16px 64px;
+      }
+      h1 { font-weight: 600; font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; }
+      .wrap { width: 100%; max-width: 1040px; }
+      .head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+      .model { font-size: 26px; font-weight: 600; letter-spacing: -0.01em; }
+      .brand { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+      .count { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 12px; letter-spacing: 0.08em; }
+      .toggle { color: var(--muted); font-size: 12px; display: flex; align-items: center; gap: 6px; justify-content: flex-end; margin-top: 8px; }
+
+      .grid { display: grid; grid-template-columns: 1fr 280px; gap: 24px; align-items: start; }
+      @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+      .stage { position: relative; border: 1px solid var(--rule); background: #fff; line-height: 0; touch-action: none; }
+      canvas { display: block; cursor: crosshair; max-width: 100%; }
+      .controls { margin-top: 16px; display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+      button { font: inherit; cursor: pointer; border: 1px solid var(--fg); background: var(--fg); color: var(--bg); padding: 8px 16px; }
+      button.ghost { background: transparent; color: var(--fg); border-color: var(--rule); }
+      button:disabled { opacity: 0.4; cursor: default; }
+      label.range { display: flex; align-items: center; gap: 8px; color: var(--muted); font-size: 12px; }
+      .hint { color: var(--muted); font-size: 12px; margin-top: 12px; max-width: 60ch; }
+
+      /* layers panel */
+      .panel { border: 1px solid var(--rule); }
+      .panel-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid var(--rule); }
+      .panel-head h2 { margin: 0; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+      .panel-head button { padding: 4px 8px; font-size: 11px; }
+      .layers { list-style: none; margin: 0; padding: 0; max-height: 560px; overflow: auto; }
+      .layer { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--rule); cursor: default; }
+      .layer:last-child { border-bottom: 0; }
+      .layer:hover { background: #f3f1ec; }
+      .layer .name { font-variant-numeric: tabular-nums; }
+      .layer .dims { color: var(--muted); font-size: 11px; }
+      .layer .del { border: 0; background: transparent; color: var(--muted); padding: 2px 6px; font-size: 16px; line-height: 1; cursor: pointer; }
+      .layer .del:hover { color: var(--fg); }
+      .layers-empty { padding: 20px 14px; color: var(--muted); font-size: 12px; }
+
+      .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--fg); color: var(--bg); padding: 8px 16px; font-size: 12px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+      .toast.show { opacity: 1; }
+      .empty { text-align: center; color: var(--muted); padding: 80px 0; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="head">
+        <div>
+          <h1>quiz-prepare</h1>
+          <div class="model" id="model">—</div>
+          <div class="brand" id="brand"></div>
+        </div>
+        <div style="text-align: right">
+          <div class="count" id="count"></div>
+          <label class="toggle"><input type="checkbox" id="all" /> include done (re-edit)</label>
+        </div>
+      </div>
+
+      <div id="editor" class="grid">
+        <!-- left: editor -->
+        <div>
+          <div class="stage" id="stage"><canvas id="canvas"></canvas></div>
+          <div class="controls">
+            <label class="range">
+              blur
+              <input type="range" id="blur" min="0.005" max="0.05" step="0.0025" value="0.02" />
+            </label>
+            <button class="ghost" id="skip">Skip</button>
+            <button id="save">Save quiz image</button>
+          </div>
+          <p class="hint">Drag over the brand name, model text and logo to mask them. Regions are Gaussian-blurred in <code>thumbnail-quiz.webp</code>, which the site picks up automatically.</p>
+        </div>
+
+        <!-- right: layers -->
+        <div class="panel">
+          <div class="panel-head">
+            <h2>Masks (<span id="mask-count">0</span>)</h2>
+            <button class="ghost" id="clear">Clear all</button>
+          </div>
+          <ul class="layers" id="layers"></ul>
+          <div class="layers-empty" id="layers-empty">No masks yet — drag on the watch face.</div>
+        </div>
+      </div>
+
+      <div class="empty" id="empty" hidden>
+        ✓ Every watch face has a quiz mask.<br />Tick “include done” to re-edit one.
+      </div>
+    </div>
+    <div class="toast" id="toast"></div>
+
+    <script>
+      const $ = (id) => document.getElementById(id);
+      const canvas = $("canvas");
+      const ctx = canvas.getContext("2d");
+      let queue = [], i = 0, img = new Image(), rects = [], draft = null, hover = -1, radiusFrac = 0.02;
+
+      const VIEW = 640; // max on-screen edge
+
+      async function loadQueue() {
+        const all = $("all").checked ? "?all=1" : "";
+        queue = await (await fetch("/api/queue" + all)).json();
+        i = 0;
+        show();
+      }
+
+      function show() {
+        if (i >= queue.length) {
+          $("editor").hidden = true;
+          $("empty").hidden = false;
+          $("model").textContent = "—";
+          $("brand").textContent = "";
+          $("count").textContent = "";
+          return;
+        }
+        $("editor").hidden = false;
+        $("empty").hidden = true;
+        const item = queue[i];
+        $("model").textContent = item.model;
+        $("brand").textContent = item.brand + (item.done ? " · redo" : "");
+        $("count").textContent = `${i + 1} of ${queue.length}`;
+        rects = [];
+        draft = null;
+        hover = -1;
+        img = new Image();
+        img.onload = () => {
+          const scale = Math.min(VIEW / img.naturalWidth, VIEW / img.naturalHeight, 1);
+          canvas.width = Math.round(img.naturalWidth * scale);
+          canvas.height = Math.round(img.naturalHeight * scale);
+          redraw();
+        };
+        img.src = "/file?p=" + encodeURIComponent(item.thumb) + "&t=" + Date.now();
+        renderLayers();
+      }
+
+      function redraw() {
+        const { width: w, height: h } = canvas;
+        ctx.filter = "none";
+        ctx.clearRect(0, 0, w, h);
+        ctx.drawImage(img, 0, 0, w, h);
+        rects.forEach((r, idx) => drawMask(r, false, idx === hover));
+        if (draft) drawMask(draft, true, false);
+      }
+
+      function drawMask(r, isDraft, highlight) {
+        const { width: w, height: h } = canvas;
+        const x = r.x * w, y = r.y * h, rw = r.w * w, rh = r.h * h;
+        if (!isDraft) {
+          ctx.save();
+          ctx.beginPath();
+          ctx.rect(x, y, rw, rh);
+          ctx.clip();
+          ctx.filter = `blur(${radiusFrac * w}px)`;
+          ctx.drawImage(img, 0, 0, w, h);
+          ctx.restore();
+        }
+        ctx.save();
+        ctx.filter = "none";
+        ctx.strokeStyle = highlight ? "#c0392b" : isDraft ? "#1a1a1a" : "rgba(26,26,26,0.7)";
+        ctx.setLineDash([5, 3]);
+        ctx.lineWidth = highlight ? 2 : 1;
+        ctx.strokeRect(x + 0.5, y + 0.5, rw, rh);
+        ctx.restore();
+      }
+
+      function renderLayers() {
+        $("mask-count").textContent = rects.length;
+        const ul = $("layers");
+        ul.innerHTML = "";
+        $("layers-empty").hidden = rects.length > 0;
+        rects.forEach((r, idx) => {
+          const li = document.createElement("li");
+          li.className = "layer";
+          const pct = (n) => Math.round(n * 100);
+          li.innerHTML =
+            `<span><span class="name">Mask ${idx + 1}</span> ` +
+            `<span class="dims">${pct(r.w)}×${pct(r.h)}%</span></span>`;
+          const del = document.createElement("button");
+          del.className = "del";
+          del.title = "Delete mask";
+          del.textContent = "×";
+          del.addEventListener("click", () => {
+            rects.splice(idx, 1);
+            hover = -1;
+            renderLayers();
+            redraw();
+          });
+          li.appendChild(del);
+          li.addEventListener("mouseenter", () => { hover = idx; redraw(); });
+          li.addEventListener("mouseleave", () => { hover = -1; redraw(); });
+          ul.appendChild(li);
+        });
+      }
+
+      // pointer → normalized rect
+      let start = null;
+      function pos(e) {
+        const b = canvas.getBoundingClientRect();
+        return { x: (e.clientX - b.left) / b.width, y: (e.clientY - b.top) / b.height };
+      }
+      canvas.addEventListener("pointerdown", (e) => {
+        canvas.setPointerCapture(e.pointerId);
+        start = pos(e);
+        draft = { x: start.x, y: start.y, w: 0, h: 0 };
+      });
+      canvas.addEventListener("pointermove", (e) => {
+        if (!start) return;
+        const p = pos(e);
+        draft = {
+          x: Math.min(start.x, p.x),
+          y: Math.min(start.y, p.y),
+          w: Math.abs(p.x - start.x),
+          h: Math.abs(p.y - start.y),
+        };
+        redraw();
+      });
+      canvas.addEventListener("pointerup", () => {
+        if (draft && draft.w > 0.01 && draft.h > 0.01) {
+          rects.push(draft);
+          renderLayers();
+        }
+        draft = start = null;
+        redraw();
+      });
+
+      $("blur").addEventListener("input", (e) => {
+        radiusFrac = parseFloat(e.target.value);
+        redraw();
+      });
+      $("clear").addEventListener("click", () => {
+        rects = [];
+        hover = -1;
+        renderLayers();
+        redraw();
+      });
+      $("skip").addEventListener("click", () => { i++; show(); });
+      $("all").addEventListener("change", loadQueue);
+
+      function toast(msg) {
+        const t = $("toast");
+        t.textContent = msg;
+        t.classList.add("show");
+        setTimeout(() => t.classList.remove("show"), 1600);
+      }
+
+      $("save").addEventListener("click", async () => {
+        const item = queue[i];
+        if (!rects.length && !confirm("No masks drawn — save an unmodified copy as the quiz image?")) return;
+        $("save").disabled = true;
+        try {
+          const res = await fetch("/api/save", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ thumb: item.thumb, rects, radiusFrac }),
+          });
+          const out = await res.json();
+          if (!out.ok) throw new Error(out.error || "save failed");
+          toast("Saved " + out.quiz);
+          if (!$("all").checked) queue.splice(i, 1);
+          else i++;
+          show();
+        } catch (err) {
+          alert("Save failed: " + err.message);
+        } finally {
+          $("save").disabled = false;
+        }
+      });
+
+      loadQueue();
+    </script>
+  </body>
+</html>

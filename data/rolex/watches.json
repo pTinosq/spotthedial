@@ -3,7 +3,6 @@
     "id": "submariner",
     "name": "Submariner",
     "thumbnail": "submariner/thumbnail.webp",
-    "thumbnailTest": "submariner/thumbnail-test.webp",
     "images": [
       "https://picsum.photos/seed/rolex-submariner-1/1200/1200",
       "https://picsum.photos/seed/rolex-submariner-2/1200/1200"
@@ -13,7 +12,6 @@
     "id": "daytona",
     "name": "Cosmograph Daytona",
     "thumbnail": "daytona/thumbnail.webp",
-    "thumbnailTest": "daytona/thumbnail-test.webp",
     "images": [
       "https://picsum.photos/seed/rolex-daytona-1/1200/1200",
       "https://picsum.photos/seed/rolex-daytona-2/1200/1200"
@@ -23,7 +21,6 @@
     "id": "datejust",
     "name": "Datejust",
     "thumbnail": "datejust/thumbnail.webp",
-    "thumbnailTest": "datejust/thumbnail-test.webp",
     "images": [
       "https://picsum.photos/seed/rolex-datejust-1/1200/1200",
       "https://picsum.photos/seed/rolex-datejust-2/1200/1200"
@@ -33,7 +30,6 @@
     "id": "gmt-master-ii",
     "name": "GMT-Master II",
     "thumbnail": "gmt-master-ii/thumbnail.webp",
-    "thumbnailTest": "gmt-master-ii/thumbnail-test.webp",
     "images": [
       "https://picsum.photos/seed/rolex-gmt-1/1200/1200",
       "https://picsum.photos/seed/rolex-gmt-2/1200/1200"
@@ -43,7 +39,6 @@
     "id": "explorer",
     "name": "Explorer",
     "thumbnail": "explorer/thumbnail.webp",
-    "thumbnailTest": "explorer/thumbnail-test.webp",
     "images": [
       "https://picsum.photos/seed/rolex-explorer-1/1200/1200",
       "https://picsum.photos/seed/rolex-explorer-2/1200/1200"
@@ -53,7 +48,6 @@
     "id": "day-date",
     "name": "Day-Date",
     "thumbnail": "day-date/thumbnail.webp",
-    "thumbnailTest": "day-date/thumbnail-test.webp",
     "images": [
       "https://picsum.photos/seed/rolex-day-date-1/1200/1200",
       "https://picsum.photos/seed/rolex-day-date-2/1200/1200"
@@ -63,7 +57,6 @@
     "id": "oyster-perpetual",
     "name": "Oyster Perpetual",
     "thumbnail": "oyster-perpetual/thumbnail.webp",
-    "thumbnailTest": "oyster-perpetual/thumbnail-test.webp",
     "images": [
       "https://picsum.photos/seed/rolex-oyster-perpetual-1/1200/1200",
       "https://picsum.photos/seed/rolex-oyster-perpetual-2/1200/1200"
