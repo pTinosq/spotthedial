@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-type QuizItem = {
+export type QuizItem = {
   id: string;
   name: string;
   brand: string;
@@ -39,7 +39,15 @@ function buildQuestions(pool: QuizItem[]): Question[] {
   });
 }
 
-export function QuizClient({ pool }: { pool: QuizItem[] }) {
+export function QuizClient({
+  pool,
+  heading,
+  showBrand,
+}: {
+  pool: QuizItem[];
+  heading: string;
+  showBrand: boolean;
+}) {
   const [seed, setSeed] = useState(0);
   const questions = useMemo(
     () => buildQuestions(pool),
@@ -58,6 +66,14 @@ export function QuizClient({ pool }: { pool: QuizItem[] }) {
         <p className="text-sm text-muted">
           Not enough watches yet — come back once more brands are live.
         </p>
+        <div className="mt-8">
+          <Link
+            href="/quiz"
+            className="border-b border-rule pb-1 text-sm text-muted hover:text-foreground"
+          >
+            ← Choose another quiz
+          </Link>
+        </div>
       </main>
     );
   }
@@ -111,6 +127,12 @@ export function QuizClient({ pool }: { pool: QuizItem[] }) {
             Play again
           </button>
           <Link
+            href="/quiz"
+            className="border-b border-rule pb-1 text-muted hover:text-foreground"
+          >
+            Change quiz
+          </Link>
+          <Link
             href="/"
             className="border-b border-rule pb-1 text-muted hover:text-foreground"
           >
@@ -125,15 +147,16 @@ export function QuizClient({ pool }: { pool: QuizItem[] }) {
 
   return (
     <main className="mx-auto w-full max-w-3xl px-6 py-12 sm:py-20">
-      <header className="mb-10 flex items-baseline justify-between">
+      <header className="mb-10 flex items-baseline justify-between gap-4">
         <Link
-          href="/"
+          href="/quiz"
           className="text-xs uppercase tracking-[0.18em] text-muted hover:text-foreground"
         >
-          ← Home
+          ← Change
         </Link>
         <p className="text-xs uppercase tracking-[0.18em] text-muted tabular-nums">
-          {idx + 1} / {questions.length}
+          <span className="text-foreground">{heading}</span> · {idx + 1} /{" "}
+          {questions.length}
         </p>
       </header>
 
@@ -174,9 +197,11 @@ export function QuizClient({ pool }: { pool: QuizItem[] }) {
                     className={`w-full cursor-pointer select-none border px-4 py-3 text-left font-serif text-lg tracking-tight transition-colors duration-150 disabled:cursor-default ${tone}`}
                   >
                     <span>{opt.name}</span>
-                    <span className="ml-2 text-xs uppercase tracking-[0.18em] opacity-60">
-                      {opt.brand}
-                    </span>
+                    {showBrand && (
+                      <span className="ml-2 text-xs uppercase tracking-[0.18em] opacity-60">
+                        {opt.brand}
+                      </span>
+                    )}
                   </button>
                 </li>
               );
