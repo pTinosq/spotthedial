@@ -12,6 +12,7 @@
         --rule: #e6e3dc;
       }
       * { box-sizing: border-box; }
+      [hidden] { display: none !important; } /* beat .grid's display:grid */
       body {
         margin: 0;
         background: var(--bg);
@@ -75,7 +76,7 @@
         </div>
       </div>
 
-      <div id="editor" class="grid">
+      <div id="editor" class="grid" hidden>
         <!-- left: editor -->
         <div>
           <div class="stage" id="stage"><canvas id="canvas"></canvas></div>
@@ -117,7 +118,12 @@
 
       async function loadQueue() {
         const all = $("all").checked ? "?all=1" : "";
-        queue = await (await fetch("/api/queue" + all)).json();
+        try {
+          const data = await (await fetch("/api/queue" + all)).json();
+          queue = Array.isArray(data) ? data : [];
+        } catch {
+          queue = [];
+        }
         i = 0;
         show();
       }
@@ -263,6 +269,7 @@
 
       $("save").addEventListener("click", async () => {
         const item = queue[i];
+        if (!item) return;
         if (!rects.length && !confirm("No masks drawn — save an unmodified copy as the quiz image?")) return;
         $("save").disabled = true;
         try {
