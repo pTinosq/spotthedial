@@ -23,15 +23,17 @@ export type Watch = {
   name: string;
   /** Either a path relative to `public/watches/<brand>/` or an absolute http(s) URL. */
   thumbnail: string;
-  /** Quiz/practice variant of the thumbnail with identifying text blurred out. Falls back to `thumbnail` when absent. */
-  thumbnailTest?: string;
   /** Same resolution rules as `thumbnail`. */
   images: string[];
 };
 
 export type WatchView = Watch & {
   thumbnailSrc: string;
-  /** Resolved URL for the quiz variant; equals `thumbnailSrc` when no test variant is configured. */
+  /**
+   * Resolved URL for the quiz variant — a `<name>-quiz.webp` sibling of the
+   * thumbnail (identifying text/logos blurred), detected on disk by convention
+   * and produced via `just quiz-prepare`. Equals `thumbnailSrc` when none exists.
+   */
   thumbnailTestSrc: string;
   imageSrcs: string[];
 };

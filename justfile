@@ -30,6 +30,13 @@ prepare-images path suffix="":
     @python3 -c 'import PIL, numpy' 2>/dev/null || (echo "missing deps — run: pip3 install pillow numpy" && exit 1)
     @python3 scripts/prepare_images.py "{{path}}" --suffix="{{suffix}}"
 
+# Launch the local quiz-prepare tool: draw blur masks over watch-face logos/text
+# and save them as `thumbnail-quiz.webp` (which the quiz then uses automatically).
+# Opens a localhost-only page in your browser. Requires Pillow (pip3 install pillow).
+quiz-prepare:
+    @python3 -c 'import PIL' 2>/dev/null || (echo "missing dep — run: pip3 install pillow" && exit 1)
+    @python3 tools/quiz-prepare/server.py
+
 # Convert every PNG under public/ to WebP (q=82) and remove the original.
 # Requires `cwebp` — install once with `brew install webp`.
 webp:
