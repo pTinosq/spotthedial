@@ -2,6 +2,7 @@
   {
     "id": "nautilus",
     "name": "Nautilus",
+    "description": "Identify the Nautilus by its rounded octagonal bezel with two hinge-like 'ears' on the left and right, the horizontally embossed dial grooves, and the integrated steel bracelet flowing straight out of the case. It may come in variants like: blue dial, green dial, white-gold, and rose-gold.",
     "thumbnail": "nautilus/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/patek-nautilus-1/1200/1200",
@@ -11,6 +12,7 @@
   {
     "id": "aquanaut",
     "name": "Aquanaut",
+    "description": "Identify the Aquanaut by its rounded octagonal bezel over a cushion-shaped case, the embossed checkerboard 'grid' pattern on the dial, and the matching tropical rubber strap. It may come in variants like: black dial, blue dial, green dial, and the diamond-set Luce.",
     "thumbnail": "aquanaut/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/patek-aquanaut-1/1200/1200",
@@ -20,6 +22,7 @@
   {
     "id": "cubitus",
     "name": "Cubitus",
+    "description": "Identify the Cubitus by its large squared-off, rounded-square case, the horizontally grooved dial borrowed from the Nautilus, and the integrated bracelet. It may come in variants like: olive-green dial and blue-grey dial.",
     "thumbnail": "cubitus/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/patek-cubitus-1/1200/1200",
@@ -29,6 +32,7 @@
   {
     "id": "calatrava",
     "name": "Calatrava",
+    "description": "Identify the Calatrava by its purist round dress-watch case, an exceptionally clean dial with slim baton or dauphine hands, and a leather strap. It may come in variants like: white dial, silver dial, and the Clous de Paris (hobnail) bezel version.",
     "thumbnail": "calatrava/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/patek-calatrava-1/1200/1200",
@@ -38,6 +42,7 @@
   {
     "id": "golden-ellipse",
     "name": "Golden Ellipse",
+    "description": "Identify the Golden Ellipse by its unmistakable elongated oval case, proportioned to the golden ratio, with a bare dial and only slim baton hands and markers. It may come in variants like: blue-gold sunburst dial and ebony-black dial.",
     "thumbnail": "golden-ellipse/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/patek-golden-ellipse-1/1200/1200",
@@ -47,6 +52,7 @@
   {
     "id": "gondolo",
     "name": "Gondolo",
+    "description": "Identify the Gondolo by its vertical Art Deco rectangular or tonneau case, frequently paired with Breguet numerals and a railway minute track. It may come in variants like: white dial, silver dial, and rose-gold.",
     "thumbnail": "gondolo/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/patek-gondolo-1/1200/1200",
@@ -56,6 +62,7 @@
   {
     "id": "twenty-4",
     "name": "Twenty~4",
+    "description": "Identify the Twenty~4 by its horizontal 'cuff' rectangular case flanked by two columns of diamonds, designed as a ladies' watch. It may come in variants like: the quartz diamond-set manchette and the round automatic in steel.",
     "thumbnail": "twenty-4/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/patek-twenty-4-1/1200/1200",
@@ -65,6 +72,7 @@
   {
     "id": "world-time",
     "name": "World Time",
+    "description": "Identify the World Time by its two concentric rotating rings — a ring of 24 world-city names around a 24-hour day/night ring — surrounding a guilloché or enamel centre, read with just an hour and minute hand. It may come in variants like: blue dial and the cloisonné enamel map centre.",
     "thumbnail": "world-time/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/patek-world-time-1/1200/1200",
@@ -74,6 +82,7 @@
   {
     "id": "perpetual-calendar",
     "name": "Perpetual Calendar",
+    "description": "Identify the Perpetual Calendar by its round case and cluster of sub-dials and apertures showing day, month, date, and moon phase, with the moon phase typically at 6 o'clock. It may come in variants like: white dial, cream dial, and versions with a leap-year indicator.",
     "thumbnail": "perpetual-calendar/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/patek-perpetual-calendar-1/1200/1200",

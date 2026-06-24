@@ -2,6 +2,7 @@
   {
     "id": "speedmaster",
     "name": "Speedmaster",
+    "description": "Identify the Speedmaster ('Moonwatch') by its three sub-dials on a black dial, the tachymetre scale on the bezel, and straight lugs with twisted edges. It may come in variants like: black 'Moonwatch' dial, white dial, and the Snoopy editions.",
     "thumbnail": "speedmaster/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/omega-speedmaster-1/1200/1200",
@@ -11,6 +12,7 @@
   {
     "id": "seamaster-diver-300m",
     "name": "Seamaster Diver 300M",
+    "description": "Identify the Seamaster Diver 300M by its wave-patterned dial, skeletonised 'sword' hands, a date window, and the helium-escape valve at 10 o'clock on the case side. It may come in variants like: blue dial-and-bezel (James Bond), black, and grey.",
     "thumbnail": "seamaster-diver-300m/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/omega-seamaster-diver-1/1200/1200",
@@ -20,6 +22,7 @@
   {
     "id": "aqua-terra",
     "name": "Aqua Terra",
+    "description": "Identify the Aqua Terra by its clean dial with vertical 'teak' stripes that echo teak decking, and a simple polished bezel — dressier than the diver Seamasters. It may come in variants like: blue dial, silver dial, and small-seconds versions.",
     "thumbnail": "aqua-terra/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/omega-aqua-terra-1/1200/1200",
@@ -29,6 +32,7 @@
   {
     "id": "planet-ocean",
     "name": "Planet Ocean",
+    "description": "Identify the Planet Ocean by its bolder, chunkier diver case, a colour-accented rotating bezel (often orange or red), broad arrow-tipped hands, and a prominent date. It may come in variants like: orange-bezel, blue-bezel, and black-on-black 'Deep Black'.",
     "thumbnail": "planet-ocean/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/omega-planet-ocean-1/1200/1200",
@@ -38,6 +42,7 @@
   {
     "id": "seamaster-300",
     "name": "Seamaster 300",
+    "description": "Identify the vintage-styled Seamaster 300 by its faux-patina cream lume, broad arrow hands, and a sandwich dial under a matte rotating bezel evoking the 1957 original. It may come in variants like: black dial and blue dial.",
     "thumbnail": "seamaster-300/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/omega-seamaster-300-1/1200/1200",
@@ -47,6 +52,7 @@
   {
     "id": "railmaster",
     "name": "Railmaster",
+    "description": "Identify the Railmaster by its very plain anti-magnetic field-watch dial: a matte sandwich dial, vintage-cream baton numerals, a railway-track minute ring, and no rotating bezel. It may come in variants like: grey dial and faux-patina black dial.",
     "thumbnail": "railmaster/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/omega-railmaster-1/1200/1200",
@@ -56,6 +62,7 @@
   {
     "id": "constellation",
     "name": "Constellation",
+    "description": "Identify the Constellation by the four 'griffe' claws gripping the bezel at 3 and 9 o'clock, the integrated bracelet, a Roman-numeral bezel, and the star emblem on the dial. It may come in variants like: silver dial, blue dial, and two-tone gold.",
     "thumbnail": "constellation/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/omega-constellation-1/1200/1200",
@@ -65,6 +72,7 @@
   {
     "id": "globemaster",
     "name": "Globemaster",
+    "description": "Identify the Globemaster by its fluted 'pie-pan' dial that steps down towards the edge, a fluted bezel, and a small star at 6 o'clock. It may come in variants like: silver pie-pan dial, blue dial, and sun-brushed grey.",
     "thumbnail": "globemaster/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/omega-globemaster-1/1200/1200",
@@ -74,6 +82,7 @@
   {
     "id": "de-ville",
     "name": "De Ville",
+    "description": "Identify the De Ville by its classic round dress case, slim profile, and clean dial often with Roman numerals — Omega's most formal, non-sporty line. It may come in variants like: silver dial, blue dial, and the Trésor and Prestige sub-lines.",
     "thumbnail": "de-ville/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/omega-deville-1/1200/1200",

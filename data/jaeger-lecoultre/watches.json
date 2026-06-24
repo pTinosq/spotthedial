@@ -2,6 +2,7 @@
   {
     "id": "reverso",
     "name": "Reverso",
+    "description": "Identify the Reverso by its rectangular Art Deco case that slides and flips within its cradle to hide the dial, with the signature three gadroons (parallel lines) across the top and bottom of the case. It may come in variants like: silver dial, blue dial, and dual-time duo-face versions.",
     "thumbnail": "https://picsum.photos/seed/jlc-reverso/600/600",
     "images": [
       "https://picsum.photos/seed/jlc-reverso-1/1200/1200",
@@ -11,6 +12,7 @@
   {
     "id": "master-control",
     "name": "Master Control",
+    "description": "Identify the Master Control by its clean round dress dial, slim case, dauphine hands, and applied baton markers — JLC's understated everyday classic. It may come in variants like: silver dial, blue dial, and date, calendar, and chronograph versions.",
     "thumbnail": "https://picsum.photos/seed/jlc-master-control/600/600",
     "images": [
       "https://picsum.photos/seed/jlc-master-control-1/1200/1200",
@@ -20,6 +22,7 @@
   {
     "id": "polaris",
     "name": "Polaris",
+    "description": "Identify the Polaris by its sporty dive-inspired look: an inner rotating bezel, three concentric dial finishes, and large luminous trapezoid markers. It may come in variants like: blue dial, black dial, and date and chronograph versions.",
     "thumbnail": "https://picsum.photos/seed/jlc-polaris/600/600",
     "images": [
       "https://picsum.photos/seed/jlc-polaris-1/1200/1200",
