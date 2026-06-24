@@ -18,8 +18,7 @@
     "name": "Patek Philippe",
     "founded": 1839,
     "country": "CH",
-    "logo": "logo.webp",
-    "comingSoon": true
+    "logo": "logo.webp"
   },
   {
     "id": "audemars-piguet",
