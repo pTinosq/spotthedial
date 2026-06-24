@@ -15,8 +15,6 @@ Binds to 127.0.0.1 only. Requires Pillow (and numpy for variant-prepare).
   ADMIN_NO_OPEN  set to skip auto-opening the browser
 """
 
-from __future__ import annotations
-
 import base64
 import json
 import os
@@ -62,12 +60,14 @@ def write_json(path: Path, obj) -> None:
     path.write_text(json.dumps(obj, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
-def brand_names() -> dict[str, str]:
+def live_brands() -> list[dict]:
+    """Brands in brands.json order, excluding `comingSoon` ones — mirrors what
+    the site actually shows (see `getLiveBrands` in lib/data.ts)."""
     try:
         brands = json.loads((DATA / "brands.json").read_text(encoding="utf-8"))
-        return {b["id"]: b.get("name", b["id"]) for b in brands}
     except (FileNotFoundError, json.JSONDecodeError):
-        return {}
+        return []
+    return [b for b in brands if not b.get("comingSoon")]
 
 
 # --------------------------------------------------------------------------- #
@@ -131,19 +131,18 @@ def load_watches(brand: str) -> list[dict]:
 
 
 def list_models() -> list[dict]:
-    names = brand_names()
     out = []
-    for wf in sorted(DATA.glob("*/watches.json")):
-        brand = wf.parts[-2]
+    for b in live_brands():
+        brand = b["id"]
         try:
-            watches = json.loads(wf.read_text(encoding="utf-8"))
-        except json.JSONDecodeError:
+            watches = json.loads((DATA / brand / "watches.json").read_text(encoding="utf-8"))
+        except (FileNotFoundError, json.JSONDecodeError):
             continue
         for w in watches:
             out.append(
                 {
                     "brand": brand,
-                    "brandName": names.get(brand, brand),
+                    "brandName": b.get("name", brand),
                     "model": w["id"],
                     "name": w.get("name", w["id"]),
                     "variantCount": len(w.get("variants", [])),
