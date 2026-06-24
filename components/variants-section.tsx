@@ -4,10 +4,44 @@ import { useMemo, useState } from "react";
 import type { VariantView } from "@/lib/types";
 
 /**
+ * Accent colours keyed by a colour word appearing in a tag. Tags that mention a
+ * dial/bezel colour render in that colour; everything else (e.g. "Black
+ * watchface") keeps the default black-outlined chip. Neutrals (black, white,
+ * grey, silver, steel) are intentionally absent so they stay default. Ordered
+ * most-specific first so "rose gold" beats "gold". Extend freely.
+ */
+const TAG_COLORS: [string, string][] = [
+  ["rose gold", "#b76e79"],
+  ["blue", "#2563eb"],
+  ["green", "#16a34a"],
+  ["red", "#dc2626"],
+  ["burgundy", "#7c2d3a"],
+  ["gold", "#b8860b"],
+  ["champagne", "#c8a951"],
+  ["yellow", "#ca8a04"],
+  ["orange", "#ea580c"],
+  ["bronze", "#9c6b30"],
+  ["brown", "#92400e"],
+  ["copper", "#b45309"],
+  ["salmon", "#e2725b"],
+  ["rose", "#e11d48"],
+  ["pink", "#db2777"],
+  ["purple", "#7c3aed"],
+  ["teal", "#0d9488"],
+];
+
+function tagColor(tag: string): string | null {
+  const t = tag.toLowerCase();
+  for (const [word, hex] of TAG_COLORS) if (t.includes(word)) return hex;
+  return null;
+}
+
+/**
  * The "Variants" block on a watch detail page: a row of tag chips that filter
  * (AND — selecting more chips narrows further) a horizontally scrolling,
- * snap-aligned strip of variant images. Mobile-friendly: the strip is a native
- * touch scroller and the chips wrap.
+ * snap-aligned strip of variant images. Tags that name a colour render in that
+ * colour; others keep the default outline. Mobile-friendly: the strip is a
+ * native touch scroller and the chips wrap.
  */
 export function VariantsSection({ variants }: { variants: VariantView[] }) {
   const allTags = useMemo(() => {
@@ -56,17 +90,29 @@ export function VariantsSection({ variants }: { variants: VariantView[] }) {
           )}
           {allTags.map((tag) => {
             const on = active.includes(tag);
+            const color = tagColor(tag);
+            const base =
+              "cursor-pointer rounded-full border px-3 py-1 text-xs transition-colors";
+            const style = color
+              ? on
+                ? { backgroundColor: color, borderColor: color, color: "#fff" }
+                : { borderColor: color, color }
+              : undefined;
+            const className = color
+              ? base
+              : `${base} ${
+                  on
+                    ? "border-foreground bg-foreground text-background"
+                    : "border-rule text-muted hover:text-foreground"
+                }`;
             return (
               <button
                 key={tag}
                 type="button"
                 aria-pressed={on}
                 onClick={() => toggle(tag)}
-                className={`cursor-pointer rounded-full border px-3 py-1 text-xs transition-colors ${
-                  on
-                    ? "border-foreground bg-foreground text-background"
-                    : "border-rule text-muted hover:text-foreground"
-                }`}
+                className={className}
+                style={style}
               >
                 {tag}
               </button>
@@ -100,7 +146,15 @@ export function VariantsSection({ variants }: { variants: VariantView[] }) {
               </div>
               {variant.tags.length > 0 && (
                 <p className="mt-2 text-[11px] leading-snug text-muted">
-                  {variant.tags.join(" · ")}
+                  {variant.tags.map((tag, t) => {
+                    const color = tagColor(tag);
+                    return (
+                      <span key={tag}>
+                        {t > 0 && " · "}
+                        <span style={color ? { color } : undefined}>{tag}</span>
+                      </span>
+                    );
+                  })}
                 </p>
               )}
             </li>
