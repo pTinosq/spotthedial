@@ -2,6 +2,7 @@
   {
     "id": "tank",
     "name": "Tank",
+    "description": "Identify the Tank by its rectangular case with strong vertical 'brancards' (the bars flanking the dial that echo a tank's tracks), Roman numerals, a railway minute track, blued sword hands, and a sapphire cabochon crown. It may come in variants like: Tank Louis, Tank Must, Tank Française, and Tank Américaine.",
     "thumbnail": "https://picsum.photos/seed/cartier-tank/600/600",
     "images": [
       "https://picsum.photos/seed/cartier-tank-1/1200/1200",
@@ -11,6 +12,7 @@
   {
     "id": "santos",
     "name": "Santos",
+    "description": "Identify the Santos by its square case with a rounded, screw-set bezel showing eight exposed screws and an integrated bracelet — one of the first purpose-built pilot's wristwatches. It may come in variants like: steel, two-tone gold-and-steel, and skeleton dials.",
     "thumbnail": "https://picsum.photos/seed/cartier-santos/600/600",
     "images": [
       "https://picsum.photos/seed/cartier-santos-1/1200/1200",
@@ -20,6 +22,7 @@
   {
     "id": "ballon-bleu",
     "name": "Ballon Bleu",
+    "description": "Identify the Ballon Bleu by its rounded case with a blue sapphire cabochon crown tucked into a protective bulge that arcs over the dial, Roman numerals, and a railway track. It may come in variants like: silver dial, and steel or two-tone cases across several sizes.",
     "thumbnail": "https://picsum.photos/seed/cartier-ballon/600/600",
     "images": [
       "https://picsum.photos/seed/cartier-ballon-1/1200/1200",

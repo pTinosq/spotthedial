@@ -2,6 +2,7 @@
   {
     "id": "snowflake",
     "name": "Snowflake",
+    "description": "Identify the Snowflake by its dimpled white dial that resembles fresh snow, razor-sharp Zaratsu-polished hands and markers, and a blued seconds hand alongside a power-reserve indicator. It may come in variants like: the classic white Spring Drive and lightweight titanium cases.",
     "thumbnail": "https://picsum.photos/seed/gs-snowflake/600/600",
     "images": [
       "https://picsum.photos/seed/gs-snowflake-1/1200/1200",
@@ -11,6 +12,7 @@
   {
     "id": "spring-drive",
     "name": "Spring Drive",
+    "description": "Identify a Spring Drive Grand Seiko by its perfectly smooth, gliding seconds hand that sweeps without ticking, frequently paired with a power-reserve indicator on the dial. It may come in variants like: Snowflake white and various nature-inspired textured dials.",
     "thumbnail": "https://picsum.photos/seed/gs-spring-drive/600/600",
     "images": [
       "https://picsum.photos/seed/gs-spring-drive-1/1200/1200",
@@ -20,6 +22,7 @@
   {
     "id": "evolution-9",
     "name": "Evolution 9",
+    "description": "Identify the Evolution 9 by its updated case proportions with wider, flatter hands and markers for maximum legibility, and a broad bracelet. It may come in variants like: the white-birch textured dial and other seasonal dials.",
     "thumbnail": "https://picsum.photos/seed/gs-evolution-9/600/600",
     "images": [
       "https://picsum.photos/seed/gs-evolution-9-1/1200/1200",

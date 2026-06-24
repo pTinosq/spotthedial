@@ -12,6 +12,7 @@
   {
     "id": "daytona",
     "name": "Cosmograph Daytona",
+    "description": "Identify the Daytona by its three sub-dials set inside the main dial, the three pushers on the right (a screw-down crown flanked by two chronograph buttons), and the tachymetre 'units per hour' scale engraved on the bezel. It may come in variants like: white 'Panda' dial, black dial, and the vintage 'Paul Newman'.",
     "thumbnail": "daytona/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/rolex-daytona-1/1200/1200",
@@ -21,6 +22,7 @@
   {
     "id": "datejust",
     "name": "Datejust",
+    "description": "Identify the Datejust by its classic round case, the date at 3 o'clock under a Cyclops lens, and most often a fluted bezel paired with a Jubilee bracelet. It may come in variants like: silver dial, blue dial, champagne dial, and smooth or fluted bezels.",
     "thumbnail": "datejust/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/rolex-datejust-1/1200/1200",
@@ -30,6 +32,7 @@
   {
     "id": "gmt-master-ii",
     "name": "GMT-Master II",
+    "description": "Identify the GMT-Master II by its two-colour 24-hour rotating bezel and the extra arrow-tipped GMT hand that tracks a second time zone. It may come in variants like: blue-and-red 'Pepsi', black-and-red 'Coke', blue-and-black 'Batman', and brown-and-gold 'Root Beer'.",
     "thumbnail": "gmt-master-ii/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/rolex-gmt-1/1200/1200",
@@ -39,6 +42,7 @@
   {
     "id": "explorer",
     "name": "Explorer",
+    "description": "Identify the Explorer by its clean, highly legible black dial with bold 3-6-9 Arabic numerals, a simple smooth bezel, and no date. It may come in variants like: the classic 36mm black dial and the two-tone Rolesor.",
     "thumbnail": "explorer/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/rolex-explorer-1/1200/1200",
@@ -48,6 +52,7 @@
   {
     "id": "day-date",
     "name": "Day-Date",
+    "description": "Identify the Day-Date (President) by the day of the week spelled out in full in an arc window at 12 o'clock plus the date at 3, the semi-circular-link President bracelet, and a case only ever in precious metal. It may come in variants like: champagne dial, green dial, and ice-blue platinum.",
     "thumbnail": "day-date/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/rolex-day-date-1/1200/1200",
@@ -57,6 +62,7 @@
   {
     "id": "oyster-perpetual",
     "name": "Oyster Perpetual",
+    "description": "Identify the Oyster Perpetual by its time-only dial with no date and no Cyclops, a smooth bezel, and clean baton markers — the purest Rolex. It may come in variants like: turquoise, coral red, green, yellow, and candy-pink lacquer dials.",
     "thumbnail": "oyster-perpetual/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/rolex-oyster-perpetual-1/1200/1200",

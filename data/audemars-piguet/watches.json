@@ -2,6 +2,7 @@
   {
     "id": "royal-oak",
     "name": "Royal Oak",
+    "description": "Identify the Royal Oak by its octagonal bezel secured with eight exposed hexagonal screws, the 'Tapisserie' waffle-textured dial, and the integrated tapering bracelet. It may come in variants like: blue 'Petite Tapisserie' dial, grey, black, and openworked skeleton dials.",
     "thumbnail": "https://picsum.photos/seed/ap-royal-oak/600/600",
     "images": [
       "https://picsum.photos/seed/ap-royal-oak-1/1200/1200",
@@ -11,6 +12,7 @@
   {
     "id": "royal-oak-offshore",
     "name": "Royal Oak Offshore",
+    "description": "Identify the Royal Oak Offshore as a bigger, bolder Royal Oak: a thicker case, an oversized screwed octagonal bezel, a 'Méga Tapisserie' dial, chunky chronograph pushers, and often a rubber strap. It may come in variants like: black, blue, and camouflage editions.",
     "thumbnail": "https://picsum.photos/seed/ap-offshore/600/600",
     "images": [
       "https://picsum.photos/seed/ap-offshore-1/1200/1200",
@@ -20,6 +22,7 @@
   {
     "id": "code-11-59",
     "name": "Code 11.59",
+    "description": "Identify the Code 11.59 by its round bezel set within a clearly visible octagonal middle case, a double-curved sapphire crystal, and a stick-style applied logo. It may come in variants like: blue lacquer dial, black, white, and smoked editions.",
     "thumbnail": "https://picsum.photos/seed/ap-code/600/600",
     "images": [
       "https://picsum.photos/seed/ap-code-1/1200/1200",
