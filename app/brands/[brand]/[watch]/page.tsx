@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CircleFlag } from "react-circle-flags";
+import { VariantsSection } from "@/components/variants-section";
 import { getBrand, getBrands, getWatch, getWatches } from "@/lib/data";
 
 export function generateStaticParams() {
@@ -77,6 +78,8 @@ export default async function WatchPage({
           </p>
         </div>
       </div>
+
+      <VariantsSection variants={watch.variants} />
 
       {(prev || next) && (
         <nav className="mt-16 grid grid-cols-2 gap-6 border-t border-rule pt-8 text-sm">
