@@ -62,6 +62,10 @@ const watchViewsByBrand: Record<string, WatchView[]> = Object.fromEntries(
         thumbnailSrc,
         thumbnailTestSrc: quizSrc(thumbnailSrc),
         imageSrcs: w.images.map((img) => resolveAsset(brandId, img)),
+        variants: (w.variants ?? []).map((v) => ({
+          ...v,
+          imageSrc: resolveAsset(brandId, v.image),
+        })),
       };
     }),
   ]),

@@ -28,7 +28,9 @@ Day-to-day commands are wrapped in a `justfile` — prefer `just <recipe>` over 
 - `just prepare-images <path>` — normalise watch-face images: removes the white background and re-centres the watch on a 2048px transparent canvas with 64px padding, so every watch renders at a consistent size regardless of how the source was cropped. Takes a file or a folder (searched recursively); overwrites in place. Requires Python deps (one-time: `pip3 install pillow numpy`).
 - `just webp` — convert every PNG under `public/` to WebP at q=82 and delete the originals. Requires `cwebp` (one-time: `brew install webp`). Run this **after** dropping any new PNG into `public/`, then update the matching JSON field (`logo`, `thumbnail`, `images`) from `.png` to `.webp`. The loader is extension-agnostic so the rename is the only manual step.
 
-- `just quiz-prepare` — launch a localhost-only tool to mask watch-face logos/text for the quiz. It lists every `thumbnail.webp` lacking a `thumbnail-quiz.webp` sibling; you drag blur rectangles over each and save. Not part of the deployed site. Requires Pillow (`pip3 install pillow`).
+- `just quiz-prepare` / `just variant-prepare` — launch the localhost-only **admin console** (`tools/admin/`, not part of the deployed site) on the matching page:
+  - `quiz-prepare` lists every `thumbnail.webp` lacking a `thumbnail-quiz.webp` sibling; you drag blur rectangles over the logos/text and save. Requires Pillow (`pip3 install pillow`).
+  - `variant-prepare` lets you pick a model, drop in watch-face images, tag each one (fuzzy autocomplete from the shared `data/tags.json` library, which the tool grows as you label), and save. Images are normalised (same pipeline as `prepare-images`) and written as `variants/variant-N.webp`; the model's `variants` array in `watches.json` is updated for you. Requires `pillow` + `numpy`.
 
 **Every watch image must be run through `just prepare-images` before it ships** — it's what keeps watches the same size on a transparent ground across the catalogue. The pipeline for a new model is: drop the raw image → `just prepare-images <path>` → (if PNG) `just webp` → `just quiz-prepare` (mask logos/text for the quiz).
 
@@ -42,10 +44,11 @@ No tests yet. Don't add a test runner until there's real logic to test (quiz sco
 app/                          Next App Router pages, layouts, route handlers
 data/
   brands.json                 The brand index — loaded by the home page
+  tags.json                   Shared variant-tag library (grown by `just variant-prepare`)
   <brand>/
     watches.json              Array of watches for that brand (brand id is implied by path)
 lib/
-  types.ts                    Brand, Watch types
+  types.ts                    Brand, Watch, Variant types
   data.ts                     Typed loaders (e.g. getBrands())
 public/
   brands/<brand>/
@@ -53,6 +56,8 @@ public/
   watches/<brand>/<model>/    Hand-drawn SVG + supporting images for each model
     thumbnail.svg
     img1.png, img2.png, ...
+    variants/variant-N.webp   Tagged variant images (authored via `just variant-prepare`)
+tools/admin/                  Localhost-only admin console (quiz-prepare + variant-prepare); not deployed
 ```
 
 Data is plain JSON, imported via `resolveJsonModule` and cast to types from `lib/types.ts` in the loader layer (`lib/data.ts`). No CMS, no DB. If a feature would need one, flag it instead of introducing one.
@@ -64,9 +69,10 @@ Data is plain JSON, imported via `resolveJsonModule` and cast to types from `lib
 { "id": "daytona", "name": "Cosmograph Daytona",
   "description": "Plain-text prose on the distinctive features (optional).",
   "thumbnail": "daytona/thumbnail.webp",
-  "images": ["daytona/img1.png", "daytona/img2.png"] }
+  "images": ["daytona/img1.png", "daytona/img2.png"],
+  "variants": [{ "image": "daytona/variants/variant-1.webp", "tags": ["Black Dial", "Oyster Bracelet"] }] }
 ```
-Paths inside the JSON are relative to the brand. The component resolves them to `/watches/<brand>/<path>` (i.e. served from `public/watches/<brand>/...`). `description` is optional plain text shown on the watch detail page (falls back to generic copy when absent). Keep the schema minimal otherwise — don't add `year`, `family`, etc. until a feature actually needs them.
+Paths inside the JSON are relative to the brand. The component resolves them to `/watches/<brand>/<path>` (i.e. served from `public/watches/<brand>/...`). `description` is optional plain text shown on the watch detail page (falls back to generic copy when absent). `variants` is optional — an array of `{ image, tags }` rendered as a tag-filterable, horizontally scrolling strip on the watch page; author it with `just variant-prepare` rather than by hand. Keep the schema minimal otherwise — don't add `year`, `family`, etc. until a feature actually needs them.
 
 **Quiz image** (no JSON field — resolved by convention). The quiz shows a blurred variant of the thumbnail with the brand name, model text and logo masked, named `<name>-quiz.webp` next to the thumbnail (e.g. `daytona/thumbnail-quiz.webp`). `quizSrc` in `lib/data.ts` detects it on disk and falls back to the plain thumbnail when it's absent — so dropping the file in is the only step. Generate these with `just quiz-prepare` rather than by hand.
 

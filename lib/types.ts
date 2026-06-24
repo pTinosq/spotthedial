@@ -18,6 +18,18 @@ export type BrandView = Brand & {
   countryCode: string;
 };
 
+/**
+ * A real-world variant of a model — a specific dial/bezel/bracelet combination —
+ * shown in the "Variants" section of the watch page and filterable by `tags`.
+ * Authored via `just variant-prepare`.
+ */
+export type Variant = {
+  /** Either a path relative to `public/watches/<brand>/` or an absolute http(s) URL. */
+  image: string;
+  /** Free-form descriptive tags, e.g. ["Black Dial", "Jubilee Bracelet"]. */
+  tags: string[];
+};
+
 export type Watch = {
   id: string;
   name: string;
@@ -27,6 +39,13 @@ export type Watch = {
   thumbnail: string;
   /** Same resolution rules as `thumbnail`. */
   images: string[];
+  /** Tagged variant images for this model. Optional. */
+  variants?: Variant[];
+};
+
+export type VariantView = Variant & {
+  /** Resolved public URL for the variant image. */
+  imageSrc: string;
 };
 
 export type WatchView = Watch & {
@@ -38,4 +57,6 @@ export type WatchView = Watch & {
    */
   thumbnailTestSrc: string;
   imageSrcs: string[];
+  /** Resolved variant images. Empty array when the model has no variants. */
+  variants: VariantView[];
 };
