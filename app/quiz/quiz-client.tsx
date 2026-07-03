@@ -183,14 +183,17 @@ export function QuizClient({
   }
 
   if (done) {
-    const perfect = modelScore === questions.length;
+    // Two-step gos are worth 2 points each (brand + model); model-only is 1.
+    const totalScore = twoStep ? brandScore + modelScore : modelScore;
+    const maxScore = twoStep ? questions.length * 2 : questions.length;
+    const perfect = totalScore === maxScore;
     return (
       <main className="mx-auto w-full max-w-2xl px-6 py-20 text-center">
         <p className="text-xs uppercase tracking-[0.18em] text-muted">
           {perfect ? "Faultless" : "Done"}
         </p>
         <h1 className="mt-3 font-serif text-5xl tracking-tight tabular-nums sm:text-6xl">
-          {modelScore} / {questions.length}
+          {totalScore} / {maxScore}
         </h1>
         {twoStep && (
           <p className="mt-3 text-xs uppercase tracking-[0.18em] text-muted tabular-nums">
