@@ -25,18 +25,18 @@ export default async function QuizPage({
   const brandId = Array.isArray(brand) ? brand[0] : brand;
   const liveBrands = getLiveBrands();
 
-  // Random mix across every live brand.
+  // Random mix across every live brand — two-step: guess the brand, then the model.
   if (brandId === "all") {
     const pool = liveBrands.flatMap(itemsFor);
-    return <QuizClient pool={pool} heading="Random mix" showBrand />;
+    return <QuizClient pool={pool} heading="Random mix" twoStep />;
   }
 
-  // Single-brand practice (distractors drawn from the same brand).
+  // Single-brand practice — brand is known, so it's model-only (one step).
   if (brandId) {
     const brand = liveBrands.find((b) => b.id === brandId);
     if (brand && itemsFor(brand).length >= MIN_POOL) {
       return (
-        <QuizClient pool={itemsFor(brand)} heading={brand.name} showBrand={false} />
+        <QuizClient pool={itemsFor(brand)} heading={brand.name} twoStep={false} />
       );
     }
     // Unknown brand or too few watches — fall through to setup.
