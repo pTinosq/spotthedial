@@ -1,32 +1,102 @@
 [
   {
-    "id": "tank",
-    "name": "Tank",
-    "description": "Identify the Tank by its rectangular case with strong vertical 'brancards' (the bars flanking the dial that echo a tank's tracks), Roman numerals, a railway minute track, blued sword hands, and a sapphire cabochon crown. It may come in variants like: Tank Louis, Tank Must, Tank Française, and Tank Américaine.",
-    "thumbnail": "https://picsum.photos/seed/cartier-tank/600/600",
-    "images": [
-      "https://picsum.photos/seed/cartier-tank-1/1200/1200",
-      "https://picsum.photos/seed/cartier-tank-2/1200/1200"
-    ]
-  },
-  {
     "id": "santos",
     "name": "Santos",
     "description": "Identify the Santos by its square case with a rounded, screw-set bezel showing eight exposed screws and an integrated bracelet — one of the first purpose-built pilot's wristwatches. It may come in variants like: steel, two-tone gold-and-steel, and skeleton dials.",
-    "thumbnail": "https://picsum.photos/seed/cartier-santos/600/600",
+    "thumbnail": "santos/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/cartier-santos-1/1200/1200",
       "https://picsum.photos/seed/cartier-santos-2/1200/1200"
     ]
   },
   {
+    "id": "tank",
+    "name": "Tank",
+    "description": "Identify the Tank by its rectangular case with strong vertical 'brancards' (the bars flanking the dial that echo a tank's tracks), Roman numerals, a railway minute track, blued sword hands, and a sapphire cabochon crown. It may come in variants like: Tank Louis, Tank Must, Tank Française, and Tank Américaine.",
+    "thumbnail": "tank/thumbnail.webp",
+    "images": [
+      "https://picsum.photos/seed/cartier-tank-1/1200/1200",
+      "https://picsum.photos/seed/cartier-tank-2/1200/1200"
+    ]
+  },
+  {
+    "id": "panthere",
+    "name": "Panthère",
+    "description": "Identify the Panthère as a compact, jewellery-like square watch — like a shrunken Santos but without the exposed bezel screws. Look for the small square case with rounded corners, Roman numerals over a fine inner rail track, blued sword hands, a sapphire cabochon crown, and a supple polished multi-link integrated bracelet (some versions add a diamond-set bezel).",
+    "thumbnail": "panthere/thumbnail.webp",
+    "images": [
+      "https://picsum.photos/seed/cartier-panthere-1/1200/1200",
+      "https://picsum.photos/seed/cartier-panthere-2/1200/1200"
+    ]
+  },
+  {
     "id": "ballon-bleu",
     "name": "Ballon Bleu",
     "description": "Identify the Ballon Bleu by its rounded case with a blue sapphire cabochon crown tucked into a protective bulge that arcs over the dial, Roman numerals, and a railway track. It may come in variants like: silver dial, and steel or two-tone cases across several sizes.",
-    "thumbnail": "https://picsum.photos/seed/cartier-ballon/600/600",
+    "thumbnail": "ballon-bleu/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/cartier-ballon-1/1200/1200",
       "https://picsum.photos/seed/cartier-ballon-2/1200/1200"
+    ]
+  },
+  {
+    "id": "pasha",
+    "name": "Pasha",
+    "description": "Identify the Pasha by its round case with bold Arabic numerals at 12, 3, 6 and 9 set over an inner square 'rail' track, blued hands, and a date window near 4 o'clock. Its signature is the screw-down crown cover — a round cap (often chained) with a cabochon that protects the crown.",
+    "thumbnail": "pasha/thumbnail.webp",
+    "images": [
+      "https://picsum.photos/seed/cartier-pasha-1/1200/1200",
+      "https://picsum.photos/seed/cartier-pasha-2/1200/1200"
+    ]
+  },
+  {
+    "id": "drive",
+    "name": "Drive",
+    "description": "Identify the Drive by its cushion-shaped (coussin) case — a rounded square with gently curved flanks. This reference carries a silvered guilloché dial with Roman numerals, a large date at 12, a retrograde second-time-zone indicator, a small-seconds sub-dial, a day/night aperture, and blued hands.",
+    "thumbnail": "drive/thumbnail.webp",
+    "images": [
+      "https://picsum.photos/seed/cartier-drive-1/1200/1200",
+      "https://picsum.photos/seed/cartier-drive-2/1200/1200"
+    ]
+  },
+  {
+    "id": "ronde",
+    "name": "Ronde",
+    "description": "Identify the Ronde as the plainest round Cartier: a thin polished bezel, a silvered dial with Roman numerals over a railway minute track, blued sword hands, a date window at 3, and 'AUTOMATIC' script above six. Clean and time-focused, without the arcing crown guard of the Ballon Bleu.",
+    "thumbnail": "ronde/thumbnail.webp",
+    "images": [
+      "https://picsum.photos/seed/cartier-ronde-1/1200/1200",
+      "https://picsum.photos/seed/cartier-ronde-2/1200/1200"
+    ]
+  },
+  {
+    "id": "tortue",
+    "name": "Tortue",
+    "description": "Identify the Tortue by its tortoise-shell-shaped case — an elongated cushion with gently curved flanks that taper toward the lugs. Look for a guilloché dial with Roman numerals, slim hands, and a sapphire cabochon crown. Elegant and typically time-only.",
+    "thumbnail": "tortue/thumbnail.webp",
+    "images": [
+      "https://picsum.photos/seed/cartier-tortue-1/1200/1200",
+      "https://picsum.photos/seed/cartier-tortue-2/1200/1200"
+    ]
+  },
+  {
+    "id": "baignoire",
+    "name": "Baignoire",
+    "description": "Identify the Baignoire by its elongated oval 'bathtub' case — much longer than it is wide, with fully rounded ends. Look for a silvered dial with elongated Roman numerals curving to follow the oval, blued hands, and a cabochon crown. A distinctive, decorative dress shape.",
+    "thumbnail": "baignoire/thumbnail.webp",
+    "images": [
+      "https://picsum.photos/seed/cartier-baignoire-1/1200/1200",
+      "https://picsum.photos/seed/cartier-baignoire-2/1200/1200"
+    ]
+  },
+  {
+    "id": "cle",
+    "name": "Clé",
+    "description": "Identify the Clé by its round polished case with distinctive curved, notched lugs and a blue sapphire cabochon set into the crown at 3 o'clock — the crown shaped like a winding key gives the model its name. Look for a silvered flinqué guilloché dial, blue Roman numerals over a fine minute track, blued sword hands, and a date window at 6.",
+    "thumbnail": "cle/thumbnail.webp",
+    "images": [
+      "https://picsum.photos/seed/cartier-cle-1/1200/1200",
+      "https://picsum.photos/seed/cartier-cle-2/1200/1200"
     ]
   }
 ]

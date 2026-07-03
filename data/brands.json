@@ -39,8 +39,7 @@
     "name": "Cartier",
     "founded": 1847,
     "country": "FR",
-    "logo": "logo.svg",
-    "comingSoon": true
+    "logo": "logo.svg"
   },
   {
     "id": "grand-seiko",
