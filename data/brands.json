@@ -25,16 +25,14 @@
     "name": "Audemars Piguet",
     "founded": 1875,
     "country": "CH",
-    "logo": "logo.svg",
-    "comingSoon": true
+    "logo": "logo.svg"
   },
   {
     "id": "jaeger-lecoultre",
     "name": "Jaeger-LeCoultre",
     "founded": 1833,
     "country": "CH",
-    "logo": "logo.webp",
-    "comingSoon": true
+    "logo": "logo.webp"
   },
   {
     "id": "cartier",

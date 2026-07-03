@@ -3,7 +3,7 @@
     "id": "reverso",
     "name": "Reverso",
     "description": "Identify the Reverso by its rectangular Art Deco case that slides and flips within its cradle to hide the dial, with the signature three gadroons (parallel lines) across the top and bottom of the case. It may come in variants like: silver dial, blue dial, and dual-time duo-face versions.",
-    "thumbnail": "https://picsum.photos/seed/jlc-reverso/600/600",
+    "thumbnail": "reverso/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/jlc-reverso-1/1200/1200",
       "https://picsum.photos/seed/jlc-reverso-2/1200/1200"
@@ -12,21 +12,51 @@
   {
     "id": "master-control",
     "name": "Master Control",
-    "description": "Identify the Master Control by its clean round dress dial, slim case, dauphine hands, and applied baton markers — JLC's understated everyday classic. It may come in variants like: silver dial, blue dial, and date, calendar, and chronograph versions.",
-    "thumbnail": "https://picsum.photos/seed/jlc-master-control/600/600",
+    "description": "Identify the Master Control by its clean round dress dial, slim case, dauphine hands, and applied baton markers — JLC's understated everyday classic. Look for the sunburst dial, a date window at 3 o'clock, and 'CHRONOMETRE' script above six. It may come in variants like: silver dial, blue dial, and date, calendar, and chronograph versions.",
+    "thumbnail": "master-control/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/jlc-master-control-1/1200/1200",
       "https://picsum.photos/seed/jlc-master-control-2/1200/1200"
     ]
   },
   {
+    "id": "master-ultra-thin",
+    "name": "Master Ultra Thin",
+    "description": "Identify the Master Ultra Thin as JLC's slimmest dress watch: a wafer-thin round case, an uncluttered silvered dial with fine applied baton indices, and slender leaf hands. Often carries a small-seconds sub-dial or a discreet moonphase at six — refined and minimal, worn on leather.",
+    "thumbnail": "master-ultra-thin/thumbnail.webp",
+    "images": [
+      "https://picsum.photos/seed/jlc-master-ultra-thin-1/1200/1200",
+      "https://picsum.photos/seed/jlc-master-ultra-thin-2/1200/1200"
+    ]
+  },
+  {
     "id": "polaris",
     "name": "Polaris",
     "description": "Identify the Polaris by its sporty dive-inspired look: an inner rotating bezel, three concentric dial finishes, and large luminous trapezoid markers. It may come in variants like: blue dial, black dial, and date and chronograph versions.",
-    "thumbnail": "https://picsum.photos/seed/jlc-polaris/600/600",
+    "thumbnail": "polaris/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/jlc-polaris-1/1200/1200",
       "https://picsum.photos/seed/jlc-polaris-2/1200/1200"
+    ]
+  },
+  {
+    "id": "duometre",
+    "name": "Duomètre",
+    "description": "Identify the Duomètre by its striking dual-dial architecture — two independent power trains driving separate displays. Look for an off-centre time sub-dial on the right, a moonphase and calendar arc on the left ('Quantième Lunaire'), an openworked lower section exposing the twin geartrains, and fine 'Cal.' movement script.",
+    "thumbnail": "duometre/thumbnail.webp",
+    "images": [
+      "https://picsum.photos/seed/jlc-duometre-1/1200/1200",
+      "https://picsum.photos/seed/jlc-duometre-2/1200/1200"
+    ]
+  },
+  {
+    "id": "rendez-vous",
+    "name": "Rendez-Vous",
+    "description": "Identify the Rendez-Vous as JLC's feminine dress line: a diamond-set bezel, a guilloché silvered dial with flowing italic Arabic numerals, blued 'Rendez-Vous' hands, and a day/night or moonphase indicator low on the dial. Elegant and decorative rather than sporty.",
+    "thumbnail": "rendez-vous/thumbnail.webp",
+    "images": [
+      "https://picsum.photos/seed/jlc-rendez-vous-1/1200/1200",
+      "https://picsum.photos/seed/jlc-rendez-vous-2/1200/1200"
     ]
   }
 ]
