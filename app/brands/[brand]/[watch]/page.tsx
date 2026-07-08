@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { CircleFlag } from "react-circle-flags";
 import { VariantsSection } from "@/components/variants-section";
 import { getBrand, getBrands, getWatch, getWatches } from "@/lib/data";
+import { formatPriceAverage, formatPriceRange } from "@/lib/format";
 
 export function generateStaticParams() {
   return getBrands().flatMap((b) =>
@@ -55,6 +56,17 @@ export default async function WatchPage({
             {watch.name}
           </h1>
 
+          {watch.price && (
+            <div className="mt-6">
+              <p className="font-serif text-2xl tracking-tight tabular-nums">
+                {formatPriceAverage(watch.price)}
+              </p>
+              <p className="mt-1 text-xs uppercase tracking-[0.18em] text-muted">
+                Approx. average
+              </p>
+            </div>
+          )}
+
           <dl className="mt-8 grid grid-cols-2 gap-y-4 border-t border-rule pt-6 text-sm">
             <dt className="text-muted">House</dt>
             <dd>{brand.name}</dd>
@@ -70,6 +82,12 @@ export default async function WatchPage({
               />
               {brand.countryName}
             </dd>
+            {watch.price && (
+              <>
+                <dt className="text-muted">Price range</dt>
+                <dd className="tabular-nums">{formatPriceRange(watch.price)}</dd>
+              </>
+            )}
           </dl>
 
           <p className="mt-8 max-w-prose text-sm text-muted leading-relaxed">
