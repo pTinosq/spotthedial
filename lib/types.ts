@@ -30,11 +30,30 @@ export type Variant = {
   tags: string[];
 };
 
+/**
+ * Approximate market pricing for a model, in whole currency units. Figures are
+ * ballpark market values (not official retail) and labelled as approximate in
+ * the UI. `average` is a typical asking price; `low`/`high` bound the usual
+ * range (entry steel vs. precious-metal / rare configurations).
+ */
+export type Price = {
+  /** ISO 4217 code, uppercase. Defaults to "USD" when omitted. */
+  currency?: string;
+  /** Typical/approximate market price. */
+  average: number;
+  /** Low end of the usual range. */
+  low: number;
+  /** High end of the usual range. */
+  high: number;
+};
+
 export type Watch = {
   id: string;
   name: string;
   /** Plain-text prose on the model's distinctive features. Optional. */
   description?: string;
+  /** Approximate market pricing (avg + range). Optional. */
+  price?: Price;
   /** Either a path relative to `public/watches/<brand>/` or an absolute http(s) URL. */
   thumbnail: string;
   /** Same resolution rules as `thumbnail`. */

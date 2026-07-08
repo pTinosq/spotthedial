@@ -3,6 +3,11 @@
     "id": "royal-oak",
     "name": "Royal Oak",
     "description": "Identify the Royal Oak by its octagonal bezel secured with eight exposed hexagonal screws, the 'Tapisserie' waffle-textured dial, and the integrated tapering bracelet. It may come in variants like: blue 'Petite Tapisserie' dial, grey, black, and openworked skeleton dials.",
+    "price": {
+      "average": 45000,
+      "low": 25000,
+      "high": 120000
+    },
     "thumbnail": "royal-oak/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/ap-royal-oak-1/1200/1200",
@@ -13,6 +18,11 @@
     "id": "royal-oak-offshore",
     "name": "Royal Oak Offshore",
     "description": "Identify the Royal Oak Offshore as a bigger, bolder Royal Oak: a thicker case, an oversized screwed octagonal bezel, a 'Méga Tapisserie' dial, chunky chronograph pushers, and often a rubber strap. It may come in variants like: black, blue, and camouflage editions.",
+    "price": {
+      "average": 40000,
+      "low": 28000,
+      "high": 90000
+    },
     "thumbnail": "royal-oak-offshore/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/ap-offshore-1/1200/1200",
@@ -23,6 +33,11 @@
     "id": "royal-oak-concept",
     "name": "Royal Oak Concept",
     "description": "Identify the Royal Oak Concept as the avant-garde Royal Oak: an oversized, sculpted octagonal case (often ceramic or titanium) with a fully openworked, skeletonised dial. Look for the exposed movement, a floating tourbillon cage, and unconventional displays like the 'H-N-R' (Hour/Neutral/Winding) selector and a jumping-hour or power-reserve window, all on a rubber strap.",
+    "price": {
+      "average": 200000,
+      "low": 150000,
+      "high": 500000
+    },
     "thumbnail": "royal-oak-concept/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/ap-concept-1/1200/1200",
@@ -33,6 +48,11 @@
     "id": "code-11-59",
     "name": "Code 11.59",
     "description": "Identify the Code 11.59 by its round bezel set within a clearly visible octagonal middle case, a double-curved sapphire crystal, and a stick-style applied logo. It may come in variants like: blue lacquer dial, black, white, and smoked editions.",
+    "price": {
+      "average": 30000,
+      "low": 25000,
+      "high": 80000
+    },
     "thumbnail": "code-11-59/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/ap-code-1/1200/1200",
@@ -43,6 +63,11 @@
     "id": "millenary",
     "name": "Millenary",
     "description": "Identify this Millenary by its clean round case ringed with a full set of luminous Arabic numerals, a slim date window at 3 o'clock, dauphine hands, and 'AUTOMATIC' script above six. A restrained, legible dress piece rather than a sports watch.",
+    "price": {
+      "average": 30000,
+      "low": 22000,
+      "high": 70000
+    },
     "thumbnail": "millenary/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/ap-millenary-1/1200/1200",
@@ -53,6 +78,11 @@
     "id": "jules-audemars",
     "name": "Jules Audemars",
     "description": "Identify the Jules Audemars as AP's purest dress watch: a slim, perfectly round case with a thin polished bezel, a guilloché-textured dial with fine applied baton indices, and slender hands. Minimal and time-only — no date, no sub-dials — the antithesis of the Royal Oak.",
+    "price": {
+      "average": 25000,
+      "low": 18000,
+      "high": 70000
+    },
     "thumbnail": "jules-audemars/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/ap-jules-1/1200/1200",
@@ -63,6 +93,11 @@
     "id": "edward-piguet",
     "name": "Edward Piguet",
     "description": "Identify the Edward Piguet by its upright rectangular (tonneau) case — unusual for AP. This chronograph carries a black dial with three sub-dials, Arabic numerals at the quarters, a date window, chronograph pushers on the right, and the 'AP' monogram above centre.",
+    "price": {
+      "average": 20000,
+      "low": 15000,
+      "high": 45000
+    },
     "thumbnail": "edward-piguet/thumbnail.webp",
     "images": [
       "https://picsum.photos/seed/ap-edward-1/1200/1200",
