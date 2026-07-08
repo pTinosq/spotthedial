@@ -68,11 +68,12 @@ Data is plain JSON, imported via `resolveJsonModule` and cast to types from `lib
 ```json
 { "id": "daytona", "name": "Cosmograph Daytona",
   "description": "Plain-text prose on the distinctive features (optional).",
+  "price": { "average": 30000, "low": 15000, "high": 90000 },
   "thumbnail": "daytona/thumbnail.webp",
   "images": ["daytona/img1.png", "daytona/img2.png"],
   "variants": [{ "image": "daytona/variants/variant-1.webp", "tags": ["Black Dial", "Oyster Bracelet"] }] }
 ```
-Paths inside the JSON are relative to the brand. The component resolves them to `/watches/<brand>/<path>` (i.e. served from `public/watches/<brand>/...`). `description` is optional plain text shown on the watch detail page (falls back to generic copy when absent). `variants` is optional — an array of `{ image, tags }` rendered as a tag-filterable, horizontally scrolling strip on the watch page; author it with `just variant-prepare` rather than by hand. Keep the schema minimal otherwise — don't add `year`, `family`, etc. until a feature actually needs them.
+Paths inside the JSON are relative to the brand. The component resolves them to `/watches/<brand>/<path>` (i.e. served from `public/watches/<brand>/...`). `description` is optional plain text shown on the watch detail page (falls back to generic copy when absent). `price` is optional — approximate market pricing in whole currency units (`average` + `low`/`high` range, USD unless a `currency` ISO code is given); shown on the detail page and catalogue tiles, formatted via `lib/format.ts`. Figures are ballpark market values, not official retail, and the UI labels them "approx." `variants` is optional — an array of `{ image, tags }` rendered as a tag-filterable, horizontally scrolling strip on the watch page; author it with `just variant-prepare` rather than by hand. Keep the schema minimal otherwise — don't add `year`, `family`, etc. until a feature actually needs them.
 
 **Quiz image** (no JSON field — resolved by convention). The quiz shows a blurred variant of the thumbnail with the brand name, model text and logo masked, named `<name>-quiz.webp` next to the thumbnail (e.g. `daytona/thumbnail-quiz.webp`). `quizSrc` in `lib/data.ts` detects it on disk and falls back to the plain thumbnail when it's absent — so dropping the file in is the only step. Generate these with `just quiz-prepare` rather than by hand.
 
