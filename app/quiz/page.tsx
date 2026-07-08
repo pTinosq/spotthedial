@@ -19,11 +19,21 @@ function itemsFor(brand: BrandView): QuizItem[] {
 export default async function QuizPage({
   searchParams,
 }: {
-  searchParams: Promise<{ brand?: string | string[] }>;
+  searchParams: Promise<{ brand?: string | string[]; mode?: string | string[] }>;
 }) {
-  const { brand } = await searchParams;
+  const { brand, mode } = await searchParams;
   const brandId = Array.isArray(brand) ? brand[0] : brand;
+  const modeId = Array.isArray(mode) ? mode[0] : mode;
   const liveBrands = getLiveBrands();
+
+  // Hard mode — the whole catalogue is fair game and there are no options:
+  // type the brand + model with autocomplete over every live watch.
+  if (modeId === "hard") {
+    const pool = liveBrands.flatMap(itemsFor);
+    if (pool.length >= MIN_POOL) {
+      return <QuizClient pool={pool} heading="Hard mode" twoStep={false} hard />;
+    }
+  }
 
   // Random mix across every live brand — two-step: guess the brand, then the model.
   if (brandId === "all") {
@@ -74,6 +84,13 @@ function QuizSetup({ brands }: { brands: BrandView[] }) {
             href="/quiz?brand=all"
             title="All brands"
             meta={`${total} watches · random mix`}
+          />
+        </li>
+        <li>
+          <SetupRow
+            href="/quiz?mode=hard"
+            title="Hard mode"
+            meta="type the answer · no options"
           />
         </li>
       </ul>
