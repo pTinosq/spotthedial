@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 
 export type QuizItem = {
   id: string;
@@ -105,15 +105,126 @@ function OptionList({
   );
 }
 
+/** Display label for a watch in hard mode — "Brand — Model". */
+function labelFor(item: QuizItem): string {
+  return `${item.brand} — ${item.name}`;
+}
+
+/**
+ * Hard-mode answer entry: a free-text box with type-ahead over the whole
+ * catalogue (every brand + model). No multiple choice — you have to know it.
+ * Every whitespace token in the query must appear somewhere in "brand model",
+ * so "rolex day" narrows to the Daytona.
+ */
+function HardInput({
+  corpus,
+  picked,
+  onPick,
+}: {
+  corpus: QuizItem[];
+  picked: QuizItem | null;
+  onPick: (item: QuizItem) => void;
+}) {
+  const [query, setQuery] = useState("");
+  const [active, setActive] = useState(0);
+  const [open, setOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const revealed = picked !== null;
+
+  const matches = useMemo(() => {
+    const tokens = query.toLowerCase().split(/\s+/).filter(Boolean);
+    if (tokens.length === 0) return [];
+    return corpus
+      .filter((item) => {
+        const hay = `${item.brand} ${item.name}`.toLowerCase();
+        return tokens.every((t) => hay.includes(t));
+      })
+      .slice(0, 8);
+  }, [query, corpus]);
+
+  const showList = open && !revealed && matches.length > 0;
+
+  function select(item: QuizItem) {
+    setQuery(labelFor(item));
+    setOpen(false);
+    onPick(item);
+  }
+
+  function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (!showList) return;
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setActive((i) => Math.min(i + 1, matches.length - 1));
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setActive((i) => Math.max(i - 1, 0));
+    } else if (e.key === "Enter") {
+      e.preventDefault();
+      const choice = matches[active];
+      if (choice) select(choice);
+    } else if (e.key === "Escape") {
+      setOpen(false);
+    }
+  }
+
+  return (
+    <div className="relative mt-4">
+      <input
+        ref={inputRef}
+        type="text"
+        value={query}
+        disabled={revealed}
+        autoComplete="off"
+        spellCheck={false}
+        placeholder="Type a brand and model…"
+        onChange={(e) => {
+          setQuery(e.target.value);
+          setActive(0);
+          setOpen(true);
+        }}
+        onFocus={() => setOpen(true)}
+        onKeyDown={onKeyDown}
+        className="w-full border border-rule bg-transparent px-4 py-3 font-serif text-lg tracking-tight outline-none transition-colors duration-150 focus:border-foreground disabled:opacity-60"
+      />
+      {showList && (
+        <ul className="absolute z-10 mt-1 max-h-72 w-full overflow-auto border border-rule bg-background shadow-sm">
+          {matches.map((item, i) => (
+            <li key={`${item.brandId}:${item.id}`}>
+              <button
+                type="button"
+                // onMouseDown (not onClick) so the pick lands before the
+                // input's blur closes the list.
+                onMouseDown={(e) => {
+                  e.preventDefault();
+                  select(item);
+                }}
+                onMouseEnter={() => setActive(i)}
+                className={`w-full cursor-pointer px-4 py-2.5 text-left font-serif text-base tracking-tight transition-colors duration-100 ${
+                  i === active ? "bg-foreground text-background" : "hover:bg-foreground/5"
+                }`}
+              >
+                {labelFor(item)}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
 export function QuizClient({
   pool,
   heading,
   twoStep,
+  hard = false,
 }: {
   pool: QuizItem[];
   heading: string;
   /** When true, each go is brand-then-model; otherwise model only. */
   twoStep: boolean;
+  /** Hard mode: type the answer with autocomplete instead of picking from options. */
+  hard?: boolean;
 }) {
   const [seed, setSeed] = useState(0);
   const questions = useMemo(
@@ -125,6 +236,7 @@ export function QuizClient({
   const [idx, setIdx] = useState(0);
   const [pickedBrand, setPickedBrand] = useState<string | null>(null);
   const [pickedModel, setPickedModel] = useState<string | null>(null);
+  const [pickedHard, setPickedHard] = useState<QuizItem | null>(null);
   const [brandScore, setBrandScore] = useState(0);
   const [modelScore, setModelScore] = useState(0);
   const [done, setDone] = useState(false);
@@ -155,9 +267,18 @@ export function QuizClient({
     setIdx(0);
     setPickedBrand(null);
     setPickedModel(null);
+    setPickedHard(null);
     setBrandScore(0);
     setModelScore(0);
     setDone(false);
+  }
+
+  function chooseHard(item: QuizItem) {
+    if (pickedHard) return;
+    setPickedHard(item);
+    if (item.brandId === q.answer.brandId && item.id === q.answer.id) {
+      setModelScore((s) => s + 1);
+    }
   }
 
   function chooseBrand(optionId: string) {
@@ -180,6 +301,7 @@ export function QuizClient({
     setIdx((i) => i + 1);
     setPickedBrand(null);
     setPickedModel(null);
+    setPickedHard(null);
   }
 
   if (done) {
@@ -226,6 +348,78 @@ export function QuizClient({
           >
             Home
           </Link>
+        </div>
+      </main>
+    );
+  }
+
+  if (hard) {
+    const hardCorrect =
+      pickedHard !== null &&
+      pickedHard.brandId === q.answer.brandId &&
+      pickedHard.id === q.answer.id;
+    return (
+      <main className="mx-auto w-full max-w-3xl px-6 py-12 sm:py-20">
+        <header className="mb-10 flex items-baseline justify-between gap-4">
+          <Link
+            href="/quiz"
+            className="text-xs uppercase tracking-[0.18em] text-muted hover:text-foreground"
+          >
+            ← Change
+          </Link>
+          <p className="text-xs uppercase tracking-[0.18em] text-muted tabular-nums">
+            <span className="text-foreground">{heading}</span> · {idx + 1} /{" "}
+            {questions.length}
+          </p>
+        </header>
+
+        <div className="grid gap-10 sm:grid-cols-[3fr_2fr] sm:gap-12">
+          <div className="aspect-square overflow-hidden border border-rule bg-white">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              key={q.answer.id}
+              src={q.answer.thumbnailSrc}
+              alt="Which watch is this?"
+              className="h-full w-full object-cover"
+            />
+          </div>
+
+          <div className="flex flex-col">
+            <p className="text-xs uppercase tracking-[0.18em] text-muted">
+              Name the watch
+            </p>
+            <HardInput
+              key={q.answer.id}
+              corpus={pool}
+              picked={pickedHard}
+              onPick={chooseHard}
+            />
+
+            {pickedHard !== null && (
+              <div className="mt-8 flex items-center justify-between border-t border-rule pt-6">
+                <p className="text-sm">
+                  {hardCorrect ? (
+                    <span>Correct.</span>
+                  ) : (
+                    <span>
+                      It was{" "}
+                      <span className="font-serif text-base">
+                        {labelFor(q.answer)}
+                      </span>
+                      .
+                    </span>
+                  )}
+                </p>
+                <button
+                  type="button"
+                  onClick={advanceQuestion}
+                  className="cursor-pointer border-b border-foreground pb-1 font-serif text-lg tracking-tight hover:opacity-70"
+                >
+                  {isLast ? "Finish" : "Next →"}
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </main>
     );
