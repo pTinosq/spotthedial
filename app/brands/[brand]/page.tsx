@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { CircleFlag } from "react-circle-flags";
 import { Tile } from "@/components/tile";
 import { getBrand, getBrands, getWatches } from "@/lib/data";
+import { formatPriceAverage } from "@/lib/format";
 
 export function generateStaticParams() {
   return getBrands().map((b) => ({ brand: b.id }));
@@ -85,6 +86,11 @@ export default async function BrandPage({
                   <span className="block font-serif text-xl tracking-tight sm:text-2xl">
                     {watch.name}
                   </span>
+                  {watch.price && (
+                    <span className="mt-1 block text-xs uppercase tracking-[0.18em] text-muted tabular-nums">
+                      {formatPriceAverage(watch.price)}
+                    </span>
+                  )}
                 </Tile>
               </li>
             ))}
