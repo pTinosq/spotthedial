@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getLiveBrands, getWatches } from "@/lib/data";
 import type { BrandView } from "@/lib/types";
 import { QuizClient, type QuizItem } from "./quiz-client";
+import { RevealClient } from "./reveal-client";
 
 /** Smallest pool that still yields an answer + 3 distractors. */
 const MIN_POOL = 4;
@@ -32,6 +33,20 @@ export default async function QuizPage({
     const pool = liveBrands.flatMap(itemsFor);
     if (pool.length >= MIN_POOL) {
       return <QuizClient pool={pool} heading="Hard mode" twoStep={false} hard />;
+    }
+  }
+
+  // Reveal mode — the masked dial is uncovered a tile at a time; guess with
+  // fewer tiles showing for a higher score. All live brands by default, or a
+  // single brand when one is named.
+  if (modeId === "reveal") {
+    const brand =
+      brandId && brandId !== "all"
+        ? liveBrands.find((b) => b.id === brandId)
+        : undefined;
+    const pool = brand ? itemsFor(brand) : liveBrands.flatMap(itemsFor);
+    if (pool.length >= MIN_POOL) {
+      return <RevealClient pool={pool} heading={brand ? brand.name : "Reveal"} />;
     }
   }
 
@@ -75,15 +90,25 @@ function QuizSetup({ brands }: { brands: BrandView[] }) {
         Test yourself
       </h1>
       <p className="mt-3 text-sm text-muted">
-        Name the watch from its face alone. Mix every brand, or focus on one.
+        Name the watch from its face alone. Pick a game, or focus on one brand.
       </p>
 
-      <ul className="mt-10 flex flex-col gap-2">
+      <p className="mt-10 mb-4 text-xs uppercase tracking-[0.18em] text-muted">
+        Games
+      </p>
+      <ul className="flex flex-col gap-2">
         <li>
           <SetupRow
             href="/quiz?brand=all"
-            title="All brands"
-            meta={`${total} watches · random mix`}
+            title="Classic"
+            meta={`${total} watches · multiple choice`}
+          />
+        </li>
+        <li>
+          <SetupRow
+            href="/quiz?mode=reveal&brand=all"
+            title="Reveal"
+            meta="uncover the dial · tile by tile"
           />
         </li>
         <li>

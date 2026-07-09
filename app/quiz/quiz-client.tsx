@@ -24,7 +24,7 @@ type Question = {
 const QUESTION_COUNT = 5;
 const OPTION_COUNT = 5;
 
-function shuffle<T>(arr: T[]): T[] {
+export function shuffle<T>(arr: T[]): T[] {
   const out = [...arr];
   for (let i = out.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -64,7 +64,7 @@ function buildQuestions(pool: QuizItem[], twoStep: boolean): Question[] {
   });
 }
 
-function OptionList({
+export function OptionList({
   options,
   picked,
   correctId,
@@ -106,7 +106,7 @@ function OptionList({
 }
 
 /** Display label for a watch in hard mode — "Brand — Model". */
-function labelFor(item: QuizItem): string {
+export function labelFor(item: QuizItem): string {
   return `${item.brand} — ${item.name}`;
 }
 
