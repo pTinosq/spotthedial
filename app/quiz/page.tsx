@@ -1,8 +1,9 @@
 import { getLiveBrands, getWatches } from "@/lib/data";
+import { isFirebaseConfigured } from "@/lib/firebase";
 import type { BrandView } from "@/lib/types";
+import { GameSetup } from "./game-client";
 import { QuizClient, type QuizItem } from "./quiz-client";
 import { RevealClient } from "./reveal-client";
-import { QuizSetup } from "./setup-client";
 
 /** Smallest pool that still yields an answer + 3 distractors. */
 const MIN_POOL = 4;
@@ -84,5 +85,12 @@ export default async function QuizPage({
     .filter(({ count }) => count >= MIN_POOL)
     .map(({ b, count }) => ({ id: b.id, name: b.name, count }));
 
-  return <QuizSetup brands={focusable} total={total} />;
+  return (
+    <GameSetup
+      brands={focusable}
+      total={total}
+      configured={isFirebaseConfigured}
+      initialTab="solo"
+    />
+  );
 }

@@ -1,6 +1,6 @@
+import { GameSetup } from "@/app/quiz/game-client";
 import { getLiveBrands, getWatches } from "@/lib/data";
 import { isFirebaseConfigured } from "@/lib/firebase";
-import { VersusEntry } from "./entry-client";
 
 /** Smallest pool that still yields an answer + 3 distractors. */
 const MIN_POOL = 4;
@@ -16,10 +16,11 @@ export default function VersusPage() {
     .map(({ b, count }) => ({ id: b.id, name: b.name, count }));
 
   return (
-    <VersusEntry
+    <GameSetup
       brands={brands}
       total={total}
       configured={isFirebaseConfigured}
+      initialTab="versus"
     />
   );
 }

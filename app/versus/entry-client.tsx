@@ -1,9 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { GamesToggle } from "@/components/games-toggle";
 import type { VersusMode } from "@/lib/quiz";
 import { materializeMatch } from "./actions";
 
@@ -36,7 +34,9 @@ function formatTimer(s: number): string {
   return r === 0 ? `${m}m` : `${m}m${r}s`;
 }
 
-export function VersusEntry({
+/** Multiplayer options body: name, create-a-match (mode/brand/timer), join.
+ *  Rendered inside the shared game-setup shell. */
+export function VersusSetup({
   brands,
   total,
   configured,
@@ -46,6 +46,7 @@ export function VersusEntry({
   configured: boolean;
 }) {
   const router = useRouter();
+  const [panel, setPanel] = useState<"create" | "join">("create");
   const [name, setName] = useState("");
   const [mode, setMode] = useState<VersusMode>("classic");
   const [brand, setBrand] = useState("all");
@@ -104,23 +105,7 @@ export function VersusEntry({
   }
 
   return (
-    <main className="mx-auto w-full max-w-2xl px-6 py-12 sm:py-20">
-      <header className="mb-8 flex items-baseline justify-between">
-        <Link
-          href="/"
-          className="text-xs uppercase tracking-[0.18em] text-muted hover:text-foreground"
-        >
-          ← Home
-        </Link>
-      </header>
-
-      <GamesToggle active="versus" />
-
-      <h1 className="mt-10 font-serif text-4xl tracking-tight sm:text-5xl">Versus</h1>
-      <p className="mt-3 text-sm text-muted">
-        Race a friend to name the watch. Fastest correct answer scores the most.
-      </p>
-
+    <>
       {!configured ? (
         <div className="mt-10 border border-rule px-5 py-6">
           <p className="text-sm">
@@ -148,13 +133,40 @@ export function VersusEntry({
             />
           </label>
 
-          {/* Create */}
-          <section className="mt-12 border-t border-rule pt-10">
-            <h2 className="font-serif text-2xl tracking-tight">Create a match</h2>
+          {/* Create / Join toggle */}
+          <div
+            role="tablist"
+            aria-label="Create or join"
+            className="mt-10 grid grid-cols-2 border border-rule"
+          >
+            {(["create", "join"] as const).map((p, i) => {
+              const selected = p === panel;
+              return (
+                <button
+                  key={p}
+                  type="button"
+                  role="tab"
+                  aria-selected={selected}
+                  onClick={() => setPanel(p)}
+                  className={`cursor-pointer px-4 py-3 text-center font-serif text-lg tracking-tight transition-colors duration-150 ${
+                    i > 0 ? "border-l border-rule" : ""
+                  } ${
+                    selected
+                      ? "bg-foreground text-background"
+                      : "text-foreground hover:bg-foreground/5"
+                  }`}
+                >
+                  {p === "create" ? "Create a match" : "Join a match"}
+                </button>
+              );
+            })}
+          </div>
 
-            <p className="mt-6 mb-3 text-xs uppercase tracking-[0.18em] text-muted">
-              Game
-            </p>
+          {panel === "create" ? (
+            <section className="mt-8">
+              <p className="mb-3 text-xs uppercase tracking-[0.18em] text-muted">
+                Game
+              </p>
             <div role="radiogroup" className="grid grid-cols-3 border border-rule">
               {MODES.map((m, i) => {
                 const selected = m.id === mode;
@@ -259,12 +271,10 @@ export function VersusEntry({
                 </span>
               </button>
             </div>
-          </section>
-
-          {/* Join */}
-          <section className="mt-12 border-t border-rule pt-10">
-            <h2 className="font-serif text-2xl tracking-tight">Join a match</h2>
-            <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            </section>
+          ) : (
+            <section className="mt-8">
+              <div className="flex flex-col gap-3 sm:flex-row">
               <input
                 type="text"
                 value={code}
@@ -285,11 +295,12 @@ export function VersusEntry({
                 </span>
               </button>
             </div>
-          </section>
+            </section>
+          )}
 
           {error && <p className="mt-6 text-sm text-red-700">{error}</p>}
         </>
       )}
-    </main>
+    </>
   );
 }
