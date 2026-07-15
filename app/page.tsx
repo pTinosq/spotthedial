@@ -9,15 +9,21 @@ export default function Home() {
 
   return (
     <main className="mx-auto w-full max-w-4xl px-6 py-12 sm:py-20">
-      <div className="mb-16 flex items-baseline justify-between sm:mb-20">
+      <div className="mb-16 flex items-center justify-between gap-4 sm:mb-20">
         <p className="font-serif text-xl tracking-tight sm:text-2xl">
           Spot the Dial
         </p>
         <Link
           href="/quiz"
-          className="text-xs uppercase tracking-[0.18em] text-muted hover:text-foreground"
+          className="group inline-flex items-center gap-2 border border-foreground bg-foreground px-4 py-2 font-serif text-sm tracking-tight text-background transition-opacity duration-150 hover:opacity-80 sm:text-base"
         >
-          Test yourself →
+          Play a game
+          <span
+            aria-hidden="true"
+            className="transition-transform duration-150 group-hover:translate-x-0.5"
+          >
+            →
+          </span>
         </Link>
       </div>
 
