@@ -197,10 +197,6 @@ function playerRef(code: string, uid: string) {
 }
 
 // ── Pure timing + scoring (unit-testable, no Firestore) ──────────────────────
-export function roundLenMs(timerMs: number): number {
-  return timerMs + RESULTS_MS;
-}
-
 export function pointsFor(reactionMs: number, timerMs: number): number {
   if (reactionMs <= 0) return MAX_POINTS;
   if (reactionMs >= timerMs) return 0;
@@ -212,48 +208,84 @@ export type RoundPhase = "countdown" | "playing" | "results" | "done";
 export type RoundState = {
   phase: RoundPhase;
   index: number;
-  /** Time into the current round's *playing* window (0..timerMs). */
+  /** Time into the current round's *playing* window. */
   elapsedInRoundMs: number;
   countdownRemainingMs: number;
 };
 
+/** Per-round answer summary, derived identically on every client from the
+ *  shared (server-stamped) answers — the basis for early reveal. */
+export type RoundAnswerInfo = {
+  /** Every player has locked in an answer for this round. */
+  allAnswered: boolean;
+  /** Server time (ms) of the last answer, when all answered. */
+  lastAnswerMs: number;
+};
+
+/** Server-time boundaries of every round. */
+export type Schedule = {
+  playStart: number[];
+  playEnd: number[];
+  resultsEnd: number[];
+};
+
 /**
- * Derive the whole game clock from the single `gameStartedAt` timestamp: an
- * initial countdown, then `rounds` windows of `timerMs` play + `RESULTS_MS`.
+ * Compute each round's boundaries from the single `gameStartedAt` timestamp plus
+ * the per-round answer info. A round's play window ends at the buzzer OR the
+ * moment everyone has answered, whichever comes first — so the reveal fires
+ * instantly once all guesses are in. Every client derives this identically (same
+ * server timestamps in, same schedule out), so no coordinating writes are needed.
  */
-export function roundStateAt(
-  gameStartedMs: number | null,
-  serverNow: number,
+export function buildSchedule(
+  gameStartedMs: number,
   timerMs: number,
   rounds: number,
-): RoundState {
-  if (gameStartedMs == null) {
-    return { phase: "countdown", index: 0, elapsedInRoundMs: 0, countdownRemainingMs: COUNTDOWN_MS };
+  info: RoundAnswerInfo[],
+): Schedule {
+  const playStart: number[] = [];
+  const playEnd: number[] = [];
+  const resultsEnd: number[] = [];
+  let cursor = gameStartedMs + COUNTDOWN_MS;
+  for (let i = 0; i < rounds; i++) {
+    const maxEnd = cursor + timerMs;
+    const ri = info[i];
+    const end = ri?.allAnswered ? Math.min(maxEnd, ri.lastAnswerMs) : maxEnd;
+    playStart.push(cursor);
+    playEnd.push(end);
+    resultsEnd.push(end + RESULTS_MS);
+    cursor = end + RESULTS_MS;
   }
-  const t = serverNow - gameStartedMs;
-  if (t < COUNTDOWN_MS) {
-    return { phase: "countdown", index: 0, elapsedInRoundMs: 0, countdownRemainingMs: COUNTDOWN_MS - t };
-  }
-  const rl = roundLenMs(timerMs);
-  const into = t - COUNTDOWN_MS;
-  const index = Math.floor(into / rl);
-  if (index >= rounds) {
-    return { phase: "done", index: rounds, elapsedInRoundMs: 0, countdownRemainingMs: 0 };
-  }
-  const offset = into - index * rl;
-  if (offset < timerMs) {
-    return { phase: "playing", index, elapsedInRoundMs: offset, countdownRemainingMs: 0 };
-  }
-  return { phase: "results", index, elapsedInRoundMs: timerMs, countdownRemainingMs: 0 };
+  return { playStart, playEnd, resultsEnd };
 }
 
-/** Server-time instant (ms) at which a round's playing window begins. */
-export function roundStartMs(
+export function currentState(
+  schedule: Schedule,
   gameStartedMs: number,
-  index: number,
-  timerMs: number,
-): number {
-  return gameStartedMs + COUNTDOWN_MS + index * roundLenMs(timerMs);
+  serverNow: number,
+  rounds: number,
+): RoundState {
+  const firstStart = gameStartedMs + COUNTDOWN_MS;
+  if (serverNow < firstStart) {
+    return {
+      phase: "countdown",
+      index: 0,
+      elapsedInRoundMs: 0,
+      countdownRemainingMs: firstStart - serverNow,
+    };
+  }
+  for (let i = 0; i < rounds; i++) {
+    if (serverNow < schedule.resultsEnd[i]) {
+      const playing = serverNow < schedule.playEnd[i];
+      return {
+        phase: playing ? "playing" : "results",
+        index: i,
+        elapsedInRoundMs:
+          (playing ? serverNow : schedule.playEnd[i]) - schedule.playStart[i],
+        countdownRemainingMs: 0,
+      };
+    }
+  }
+  return { phase: "done", index: rounds, elapsedInRoundMs: 0, countdownRemainingMs: 0 };
 }
 
 /** Tiles uncovered so far in reveal mode: one free tile, then one more every
@@ -263,15 +295,14 @@ export function revealedTileCount(elapsedInRoundMs: number, timerMs: number): nu
   return Math.max(1, Math.min(REVEAL_TILE_COUNT, 1 + Math.floor(elapsedInRoundMs / step)));
 }
 
-/** Points a player earned on a round given the server-stamped answer. */
+/** Points a player earned on a round given the server-stamped answer and the
+ *  round's (dynamic) play-start instant. */
 export function scoreForAnswer(
   answer: AnswerDoc | undefined,
   answerKey: string,
-  gameStartedMs: number,
-  index: number,
+  playStartMs: number,
   timerMs: number,
 ): number {
   if (!answer?.answeredAt || answer.choiceKey !== answerKey) return 0;
-  const reaction = answer.answeredAt.toMillis() - roundStartMs(gameStartedMs, index, timerMs);
-  return pointsFor(reaction, timerMs);
+  return pointsFor(answer.answeredAt.toMillis() - playStartMs, timerMs);
 }

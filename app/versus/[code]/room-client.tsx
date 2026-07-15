@@ -10,13 +10,17 @@ import {
 } from "@/lib/quiz";
 import { ensureUid } from "@/lib/firebase";
 import {
+  COUNTDOWN_MS,
+  buildSchedule,
+  currentState,
   estimateServerOffset,
   finishGame,
   heartbeat,
   type MatchDoc,
   type Player,
+  type RoundAnswerInfo,
+  type Schedule,
   revealedTileCount,
-  roundStateAt,
   scoreForAnswer,
   startGame,
   subscribeMatch,
@@ -77,9 +81,38 @@ export function VersusRoom({ code }: { code: string }) {
   const timerMs = match?.config.timerMs ?? 10_000;
   const rounds = match?.config.rounds ?? 5;
   const gameStartedMs = match?.gameStartedAt?.toMillis() ?? null;
+
+  // Per-round answer summary → schedule. A round ends the instant everyone has
+  // locked in (or at the buzzer), computed identically on every client.
+  const info = useMemo<RoundAnswerInfo[]>(() => {
+    return Array.from({ length: rounds }, (_, i) => {
+      let allAnswered = players.length > 0;
+      let lastAnswerMs = 0;
+      for (const p of players) {
+        const t = p.answers?.[i]?.answeredAt?.toMillis();
+        if (t == null) allAnswered = false;
+        else lastAnswerMs = Math.max(lastAnswerMs, t);
+      }
+      return { allAnswered, lastAnswerMs };
+    });
+  }, [players, rounds]);
+
+  const schedule = useMemo<Schedule | null>(
+    () => (gameStartedMs != null ? buildSchedule(gameStartedMs, timerMs, rounds, info) : null),
+    [gameStartedMs, timerMs, rounds, info],
+  );
+
   const rs = useMemo(
-    () => roundStateAt(gameStartedMs, serverNow, timerMs, rounds),
-    [gameStartedMs, serverNow, timerMs, rounds],
+    () =>
+      schedule && gameStartedMs != null
+        ? currentState(schedule, gameStartedMs, serverNow, rounds)
+        : {
+            phase: "countdown" as const,
+            index: 0,
+            elapsedInRoundMs: 0,
+            countdownRemainingMs: COUNTDOWN_MS,
+          },
+    [schedule, gameStartedMs, serverNow, rounds],
   );
 
   const isHost = !!uid && match?.hostUid === uid;
@@ -163,7 +196,7 @@ export function VersusRoom({ code }: { code: string }) {
   }
 
   if (match.status === "finished" || rs.phase === "done") {
-    return <FinalScreen match={match} players={players} gameStartedMs={gameStartedMs} />;
+    return <FinalScreen match={match} players={players} schedule={schedule} />;
   }
 
   // Playing or results for the current round.
@@ -257,7 +290,7 @@ export function VersusRoom({ code }: { code: string }) {
           <LiveScores
             players={players}
             match={match}
-            gameStartedMs={gameStartedMs}
+            schedule={schedule}
             uid={uid}
             upTo={revealed ? rs.index : rs.index - 1}
           />
@@ -347,19 +380,18 @@ function RevealMask({
 function scoreboard(
   players: Player[],
   match: MatchDoc,
-  gameStartedMs: number | null,
+  schedule: Schedule | null,
   upTo: number,
 ) {
   return players
     .map((p) => {
       let score = 0;
-      if (gameStartedMs != null) {
+      if (schedule) {
         for (let i = 0; i <= upTo && i < match.questions.length; i++) {
           score += scoreForAnswer(
             p.answers?.[i],
             itemKey(match.questions[i].answer),
-            gameStartedMs,
-            i,
+            schedule.playStart[i],
             match.config.timerMs,
           );
         }
@@ -372,17 +404,17 @@ function scoreboard(
 function LiveScores({
   players,
   match,
-  gameStartedMs,
+  schedule,
   uid,
   upTo,
 }: {
   players: Player[];
   match: MatchDoc;
-  gameStartedMs: number | null;
+  schedule: Schedule | null;
   uid: string | null;
   upTo: number;
 }) {
-  const board = scoreboard(players, match, gameStartedMs, upTo);
+  const board = scoreboard(players, match, schedule, upTo);
   return (
     <ul className="mt-8 flex flex-col gap-1 border-t border-rule pt-6">
       {board.map((row) => (
@@ -403,13 +435,13 @@ function LiveScores({
 function FinalScreen({
   match,
   players,
-  gameStartedMs,
+  schedule,
 }: {
   match: MatchDoc;
   players: Player[];
-  gameStartedMs: number | null;
+  schedule: Schedule | null;
 }) {
-  const board = scoreboard(players, match, gameStartedMs, match.questions.length - 1);
+  const board = scoreboard(players, match, schedule, match.questions.length - 1);
   const top = board[0]?.score ?? 0;
   return (
     <main className="mx-auto w-full max-w-2xl px-6 py-20 text-center">
