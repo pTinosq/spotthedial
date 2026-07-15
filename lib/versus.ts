@@ -14,7 +14,7 @@ import { REVEAL_TILE_COUNT, type QuizItem, type VersusMode, type VersusRound } f
 // ── Tunables ────────────────────────────────────────────────────────────────
 export const DEFAULT_TIMER_MS = 10_000;
 export const MIN_TIMER_MS = 5_000;
-export const MAX_TIMER_MS = 30_000;
+export const MAX_TIMER_MS = 180_000;
 /** Shared countdown before round 0, and the results pause between rounds. */
 export const COUNTDOWN_MS = 3_000;
 export const RESULTS_MS = 3_500;

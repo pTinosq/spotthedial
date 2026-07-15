@@ -14,8 +14,26 @@ const MODES: { id: VersusMode; title: string; blurb: string }[] = [
   { id: "hard", title: "Hard", blurb: "No options — type the answer. Fastest correct wins." },
 ];
 
-const TIMERS = [5, 10, 15, 30];
+// Reveal uncovers 64 tiles over the timer, so it needs far longer than a
+// snap-judgement round — hence minute-scale options and a 2-minute default.
+const TIMERS_BY_MODE: Record<VersusMode, number[]> = {
+  classic: [5, 10, 15, 30],
+  hard: [5, 10, 15, 30],
+  reveal: [60, 90, 120, 180],
+};
+const DEFAULT_TIMER_BY_MODE: Record<VersusMode, number> = {
+  classic: 10,
+  hard: 10,
+  reveal: 120,
+};
 const ROUNDS = 5;
+
+function formatTimer(s: number): string {
+  if (s < 60) return `${s}s`;
+  const m = Math.floor(s / 60);
+  const r = s % 60;
+  return r === 0 ? `${m}m` : `${m}m${r}s`;
+}
 
 export function VersusEntry({
   brands,
@@ -143,7 +161,10 @@ export function VersusEntry({
                     type="button"
                     role="radio"
                     aria-checked={selected}
-                    onClick={() => setMode(m.id)}
+                    onClick={() => {
+                      setMode(m.id);
+                      setTimerS(DEFAULT_TIMER_BY_MODE[m.id]);
+                    }}
                     className={`cursor-pointer px-3 py-3 font-serif text-lg tracking-tight transition-colors duration-150 ${
                       i > 0 ? "border-l border-rule" : ""
                     } ${
@@ -196,10 +217,10 @@ export function VersusEntry({
             </div>
 
             <p className="mt-8 mb-3 text-xs uppercase tracking-[0.18em] text-muted">
-              Seconds per watch
+              Time per watch
             </p>
             <div role="radiogroup" className="grid grid-cols-4 border border-rule">
-              {TIMERS.map((t, i) => {
+              {TIMERS_BY_MODE[mode].map((t, i) => {
                 const selected = t === timerS;
                 return (
                   <button
@@ -216,7 +237,7 @@ export function VersusEntry({
                         : "hover:bg-foreground/5"
                     }`}
                   >
-                    {t}s
+                    {formatTimer(t)}
                   </button>
                 );
               })}
