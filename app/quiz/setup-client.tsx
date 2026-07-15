@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { GamesToggle } from "@/components/games-toggle";
 
 type BrandChoice = { id: string; name: string; count: number };
 
@@ -55,7 +56,7 @@ export function QuizSetup({
 
   return (
     <main className="mx-auto w-full max-w-2xl px-6 py-12 sm:py-20">
-      <header className="mb-10 flex items-baseline justify-between">
+      <header className="mb-8 flex items-baseline justify-between">
         <Link
           href="/"
           className="text-xs uppercase tracking-[0.18em] text-muted hover:text-foreground"
@@ -64,7 +65,9 @@ export function QuizSetup({
         </Link>
       </header>
 
-      <h1 className="font-serif text-4xl tracking-tight sm:text-5xl">
+      <GamesToggle active="solo" />
+
+      <h1 className="mt-10 font-serif text-4xl tracking-tight sm:text-5xl">
         Test yourself
       </h1>
       <p className="mt-3 text-sm text-muted">

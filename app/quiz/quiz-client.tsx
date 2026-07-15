@@ -2,14 +2,11 @@
 
 import Link from "next/link";
 import { useMemo, useRef, useState } from "react";
+import { labelFor, shuffle, type QuizItem } from "@/lib/quiz";
 
-export type QuizItem = {
-  id: string;
-  name: string;
-  brand: string;
-  brandId: string;
-  thumbnailSrc: string;
-};
+// Re-exported for the reveal client, which imports these from here.
+export { labelFor, shuffle };
+export type { QuizItem };
 
 type BrandOption = { id: string; name: string };
 
@@ -23,15 +20,6 @@ type Question = {
 
 const QUESTION_COUNT = 5;
 const OPTION_COUNT = 5;
-
-export function shuffle<T>(arr: T[]): T[] {
-  const out = [...arr];
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [out[i], out[j]] = [out[j], out[i]];
-  }
-  return out;
-}
 
 function buildQuestions(pool: QuizItem[], twoStep: boolean): Question[] {
   if (pool.length < 4) return [];
@@ -105,18 +93,13 @@ export function OptionList({
   );
 }
 
-/** Display label for a watch in hard mode — "Brand — Model". */
-export function labelFor(item: QuizItem): string {
-  return `${item.brand} — ${item.name}`;
-}
-
 /**
  * Hard-mode answer entry: a free-text box with type-ahead over the whole
  * catalogue (every brand + model). No multiple choice — you have to know it.
  * Every whitespace token in the query must appear somewhere in "brand model",
  * so "rolex day" narrows to the Daytona.
  */
-function HardInput({
+export function HardInput({
   corpus,
   picked,
   onPick,
