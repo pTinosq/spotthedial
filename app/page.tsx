@@ -17,7 +17,7 @@ export default function Home() {
           href="/quiz"
           className="text-xs uppercase tracking-[0.18em] text-muted hover:text-foreground"
         >
-          Test yourself →
+          Play →
         </Link>
       </div>
 
