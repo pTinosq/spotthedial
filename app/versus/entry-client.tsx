@@ -1,9 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { GamesToggle } from "@/components/games-toggle";
 import type { VersusMode } from "@/lib/quiz";
 import { materializeMatch } from "./actions";
 
@@ -36,7 +34,9 @@ function formatTimer(s: number): string {
   return r === 0 ? `${m}m` : `${m}m${r}s`;
 }
 
-export function VersusEntry({
+/** Multiplayer options body: name, create-a-match (mode/brand/timer), join.
+ *  Rendered inside the shared game-setup shell. */
+export function VersusSetup({
   brands,
   total,
   configured,
@@ -104,23 +104,7 @@ export function VersusEntry({
   }
 
   return (
-    <main className="mx-auto w-full max-w-2xl px-6 py-12 sm:py-20">
-      <header className="mb-8 flex items-baseline justify-between">
-        <Link
-          href="/"
-          className="text-xs uppercase tracking-[0.18em] text-muted hover:text-foreground"
-        >
-          ← Home
-        </Link>
-      </header>
-
-      <GamesToggle active="versus" />
-
-      <h1 className="mt-10 font-serif text-4xl tracking-tight sm:text-5xl">Versus</h1>
-      <p className="mt-3 text-sm text-muted">
-        Race a friend to name the watch. Fastest correct answer scores the most.
-      </p>
-
+    <>
       {!configured ? (
         <div className="mt-10 border border-rule px-5 py-6">
           <p className="text-sm">
@@ -290,6 +274,6 @@ export function VersusEntry({
           {error && <p className="mt-6 text-sm text-red-700">{error}</p>}
         </>
       )}
-    </main>
+    </>
   );
 }

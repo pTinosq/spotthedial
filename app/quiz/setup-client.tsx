@@ -2,9 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { GamesToggle } from "@/components/games-toggle";
 
-type BrandChoice = { id: string; name: string; count: number };
+export type BrandChoice = { id: string; name: string; count: number };
 
 type ModeChoice = {
   id: string;
@@ -31,11 +30,11 @@ const MODES: ModeChoice[] = [
 ];
 
 /**
- * Single entry screen for every game: pick a mode (segmented switch), pick a
- * brand ("All" or one live brand), then start. The Start link encodes the
- * choice as `/quiz?mode=…&brand=…`, which the server page dispatches on.
+ * Solo options body: pick a mode (segmented switch), pick a brand, then start.
+ * The Start link encodes the choice as `/quiz?mode=…&brand=…`, which the server
+ * page dispatches on. Rendered inside the shared game-setup shell.
  */
-export function QuizSetup({
+export function SoloSetup({
   brands,
   total,
 }: {
@@ -55,25 +54,7 @@ export function QuizSetup({
   const activeMode = MODES.find((m) => m.id === mode) ?? MODES[0];
 
   return (
-    <main className="mx-auto w-full max-w-2xl px-6 py-12 sm:py-20">
-      <header className="mb-8 flex items-baseline justify-between">
-        <Link
-          href="/"
-          className="text-xs uppercase tracking-[0.18em] text-muted hover:text-foreground"
-        >
-          ← Home
-        </Link>
-      </header>
-
-      <GamesToggle active="solo" />
-
-      <h1 className="mt-10 font-serif text-4xl tracking-tight sm:text-5xl">
-        Test yourself
-      </h1>
-      <p className="mt-3 text-sm text-muted">
-        Name the watch from its face alone. Pick a game and a brand.
-      </p>
-
+    <>
       {/* Mode — segmented switch */}
       <p className="mt-10 mb-4 text-xs uppercase tracking-[0.18em] text-muted">
         Game
@@ -158,6 +139,6 @@ export function QuizSetup({
           </span>
         </Link>
       </div>
-    </main>
+    </>
   );
 }
