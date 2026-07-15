@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { GamesToggle } from "@/components/games-toggle";
 import type { VersusMode } from "@/lib/quiz";
 import { materializeMatch } from "./actions";
 
@@ -104,16 +105,18 @@ export function VersusEntry({
 
   return (
     <main className="mx-auto w-full max-w-2xl px-6 py-12 sm:py-20">
-      <header className="mb-10 flex items-baseline justify-between">
+      <header className="mb-8 flex items-baseline justify-between">
         <Link
-          href="/quiz"
+          href="/"
           className="text-xs uppercase tracking-[0.18em] text-muted hover:text-foreground"
         >
-          ← Solo games
+          ← Home
         </Link>
       </header>
 
-      <h1 className="font-serif text-4xl tracking-tight sm:text-5xl">Versus</h1>
+      <GamesToggle active="versus" />
+
+      <h1 className="mt-10 font-serif text-4xl tracking-tight sm:text-5xl">Versus</h1>
       <p className="mt-3 text-sm text-muted">
         Race a friend to name the watch. Fastest correct answer scores the most.
       </p>

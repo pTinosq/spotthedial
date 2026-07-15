@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { GamesToggle } from "@/components/games-toggle";
 import { getLiveBrands, getWatches } from "@/lib/data";
 import type { BrandView } from "@/lib/types";
 import { QuizClient, type QuizItem } from "./quiz-client";
@@ -77,22 +78,18 @@ function QuizSetup({ brands }: { brands: BrandView[] }) {
 
   return (
     <main className="mx-auto w-full max-w-2xl px-6 py-12 sm:py-20">
-      <header className="mb-10 flex items-baseline justify-between">
+      <header className="mb-8 flex items-baseline justify-between">
         <Link
           href="/"
           className="text-xs uppercase tracking-[0.18em] text-muted hover:text-foreground"
         >
           ← Home
         </Link>
-        <Link
-          href="/versus"
-          className="text-xs uppercase tracking-[0.18em] text-muted hover:text-foreground"
-        >
-          Versus →
-        </Link>
       </header>
 
-      <h1 className="font-serif text-4xl tracking-tight sm:text-5xl">
+      <GamesToggle active="solo" />
+
+      <h1 className="mt-10 font-serif text-4xl tracking-tight sm:text-5xl">
         Test yourself
       </h1>
       <p className="mt-3 text-sm text-muted">
