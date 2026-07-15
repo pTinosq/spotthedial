@@ -84,6 +84,12 @@ function QuizSetup({ brands }: { brands: BrandView[] }) {
         >
           ← Home
         </Link>
+        <Link
+          href="/versus"
+          className="text-xs uppercase tracking-[0.18em] text-muted hover:text-foreground"
+        >
+          Versus →
+        </Link>
       </header>
 
       <h1 className="font-serif text-4xl tracking-tight sm:text-5xl">

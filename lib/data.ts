@@ -8,6 +8,7 @@ import apWatches from "@/data/audemars-piguet/watches.json";
 import jlcWatches from "@/data/jaeger-lecoultre/watches.json";
 import cartierWatches from "@/data/cartier/watches.json";
 import grandSeikoWatches from "@/data/grand-seiko/watches.json";
+import type { QuizItem } from "./quiz";
 import type { Brand, BrandView, Watch, WatchView } from "./types";
 
 const regionNames = new Intl.DisplayNames(["en"], { type: "region" });
@@ -92,4 +93,25 @@ export function getWatch(
 
 export function getLiveBrands(): BrandView[] {
   return brands.filter((b) => !b.comingSoon);
+}
+
+/**
+ * Flatten live watches into quiz items (using the masked quiz image), scoped to
+ * one brand or `"all"`. Shared by the single-player quiz and the versus match
+ * builder. Coming-soon brands are always excluded.
+ */
+export function getQuizPool(brandId: string): QuizItem[] {
+  const scope =
+    brandId === "all"
+      ? getLiveBrands()
+      : getLiveBrands().filter((b) => b.id === brandId);
+  return scope.flatMap((b) =>
+    getWatches(b.id).map((w) => ({
+      id: w.id,
+      name: w.name,
+      brand: b.name,
+      brandId: b.id,
+      thumbnailSrc: w.thumbnailTestSrc,
+    })),
+  );
 }
