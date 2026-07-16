@@ -23,11 +23,20 @@ const MODES: ModeChoice[] = [
     blurb: "The dial is uncovered a tile at a time. The fewer you reveal, the higher the score.",
   },
   {
+    id: "blur",
+    title: "Blur",
+    blurb: "The dial sharpens from a heavy blur over the clock. Name it while it's still soft to score.",
+  },
+  {
     id: "hard",
     title: "Hard",
     blurb: "No options. Type the answer with autocomplete — you have to know it.",
   },
 ];
+
+/** Blur-mode sharpen durations (seconds) — kept in step with page.tsx. */
+const BLUR_SECONDS = [5, 15, 30];
+const DEFAULT_BLUR_SECONDS = 15;
 
 /**
  * Solo options body: pick a mode (segmented switch), pick a brand, then start.
@@ -45,12 +54,16 @@ export function SoloSetup({
 }) {
   const [mode, setMode] = useState<string>("classic");
   const [brand, setBrand] = useState<string>("all");
+  const [seconds, setSeconds] = useState<number>(DEFAULT_BLUR_SECONDS);
 
   const choices: BrandChoice[] = [
     { id: "all", name: "All brands", count: total },
     ...brands,
   ];
-  const href = `/quiz?mode=${mode}&brand=${brand}`;
+  const href =
+    mode === "blur"
+      ? `/quiz?mode=${mode}&brand=${brand}&seconds=${seconds}`
+      : `/quiz?mode=${mode}&brand=${brand}`;
   const activeMode = MODES.find((m) => m.id === mode) ?? MODES[0];
 
   return (
@@ -62,7 +75,7 @@ export function SoloSetup({
       <div
         role="radiogroup"
         aria-label="Game mode"
-        className="grid grid-cols-3 border border-rule"
+        className="grid grid-cols-4 border border-rule"
       >
         {MODES.map((m, i) => {
           const selected = m.id === mode;
@@ -73,7 +86,7 @@ export function SoloSetup({
               role="radio"
               aria-checked={selected}
               onClick={() => setMode(m.id)}
-              className={`cursor-pointer px-4 py-3 font-serif text-lg tracking-tight transition-colors duration-150 ${
+              className={`cursor-pointer px-2 py-3 font-serif text-base tracking-tight transition-colors duration-150 sm:px-4 sm:text-lg ${
                 i > 0 ? "border-l border-rule" : ""
               } ${
                 selected
@@ -87,6 +100,42 @@ export function SoloSetup({
         })}
       </div>
       <p className="mt-3 text-sm text-muted">{activeMode.blurb}</p>
+
+      {/* Blur duration — how long the dial takes to sharpen. Blur-only knob. */}
+      {mode === "blur" && (
+        <>
+          <p className="mt-8 mb-4 text-xs uppercase tracking-[0.18em] text-muted">
+            Sharpen over
+          </p>
+          <div
+            role="radiogroup"
+            aria-label="Sharpen duration"
+            className="grid grid-cols-3 border border-rule"
+          >
+            {BLUR_SECONDS.map((s, i) => {
+              const selected = s === seconds;
+              return (
+                <button
+                  key={s}
+                  type="button"
+                  role="radio"
+                  aria-checked={selected}
+                  onClick={() => setSeconds(s)}
+                  className={`cursor-pointer px-3 py-3 font-serif text-lg tabular-nums tracking-tight transition-colors duration-150 ${
+                    i > 0 ? "border-l border-rule" : ""
+                  } ${
+                    selected
+                      ? "bg-foreground text-background"
+                      : "text-foreground hover:bg-foreground/5"
+                  }`}
+                >
+                  {s}s
+                </button>
+              );
+            })}
+          </div>
+        </>
+      )}
 
       {/* Brand — selectable chips */}
       <p className="mt-10 mb-4 text-xs uppercase tracking-[0.18em] text-muted">

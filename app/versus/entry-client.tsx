@@ -10,20 +10,24 @@ type BrandChoice = { id: string; name: string; count: number };
 const MODES: { id: VersusMode; title: string; blurb: string }[] = [
   { id: "classic", title: "Classic", blurb: "Multiple choice — first to name the watch scores most." },
   { id: "reveal", title: "Reveal", blurb: "The dial uncovers tile by tile in sync. Guess early to win big." },
+  { id: "blur", title: "Blur", blurb: "The dial sharpens from a blur in sync. First to name it while it's soft wins." },
   { id: "hard", title: "Hard", blurb: "No options — type the answer. Fastest correct wins." },
 ];
 
-// Reveal uncovers 64 tiles over the timer, so it needs far longer than a
-// snap-judgement round — hence minute-scale options and a 2-minute default.
+// Reveal uncovers 64 tiles over the timer and blur sharpens across it, so both
+// need longer than a snap-judgement round — hence the longer options and
+// minute(ish)-scale defaults.
 const TIMERS_BY_MODE: Record<VersusMode, number[]> = {
   classic: [5, 10, 15, 30],
   hard: [5, 10, 15, 30],
   reveal: [60, 90, 120, 180],
+  blur: [5, 15, 30],
 };
 const DEFAULT_TIMER_BY_MODE: Record<VersusMode, number> = {
   classic: 10,
   hard: 10,
   reveal: 120,
+  blur: 15,
 };
 const ROUNDS = 5;
 
@@ -167,7 +171,7 @@ export function VersusSetup({
               <p className="mb-3 text-xs uppercase tracking-[0.18em] text-muted">
                 Game
               </p>
-            <div role="radiogroup" className="grid grid-cols-3 border border-rule">
+            <div role="radiogroup" className="grid grid-cols-4 border border-rule">
               {MODES.map((m, i) => {
                 const selected = m.id === mode;
                 return (
@@ -180,7 +184,7 @@ export function VersusSetup({
                       setMode(m.id);
                       setTimerS(DEFAULT_TIMER_BY_MODE[m.id]);
                     }}
-                    className={`cursor-pointer px-3 py-3 font-serif text-lg tracking-tight transition-colors duration-150 ${
+                    className={`cursor-pointer px-2 py-3 font-serif text-base tracking-tight transition-colors duration-150 sm:px-3 sm:text-lg ${
                       i > 0 ? "border-l border-rule" : ""
                     } ${
                       selected
@@ -234,7 +238,12 @@ export function VersusSetup({
             <p className="mt-8 mb-3 text-xs uppercase tracking-[0.18em] text-muted">
               Time per watch
             </p>
-            <div role="radiogroup" className="grid grid-cols-4 border border-rule">
+            <div
+              role="radiogroup"
+              className={`grid border border-rule ${
+                TIMERS_BY_MODE[mode].length === 3 ? "grid-cols-3" : "grid-cols-4"
+              }`}
+            >
               {TIMERS_BY_MODE[mode].map((t, i) => {
                 const selected = t === timerS;
                 return (
