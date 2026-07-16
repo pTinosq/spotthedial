@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   REVEAL_GRID_SIZE,
+  blurPxFor,
   itemKey,
   labelFor,
   type QuizItem,
@@ -209,10 +210,13 @@ export function VersusRoom({ code }: { code: string }) {
   ).length;
   const remaining = Math.max(0, Math.ceil((timerMs - rs.elapsedInRoundMs) / 1000));
   const isReveal = match.config.mode === "reveal";
+  const isBlur = match.config.mode === "blur";
   const tilesShown = isReveal
     ? revealedTileCount(rs.elapsedInRoundMs, timerMs)
     : 0;
-  const showFull = revealed || !isReveal;
+  // Both reveal and blur keep the dial obscured until the results phase.
+  const showFull = revealed || (!isReveal && !isBlur);
+  const blurPx = isBlur && !showFull ? blurPxFor(rs.elapsedInRoundMs / timerMs) : 0;
 
   return (
     <Shell code={code}>
@@ -245,8 +249,13 @@ export function VersusRoom({ code }: { code: string }) {
             src={question.answer.thumbnailSrc}
             alt="Which watch is this?"
             className={`absolute inset-0 h-full w-full ${
-              isReveal ? "object-contain" : "object-cover"
+              isReveal || isBlur ? "object-contain" : "object-cover"
             }`}
+            style={
+              isBlur
+                ? { filter: `blur(${blurPx}px)`, transition: "filter 120ms linear" }
+                : undefined
+            }
           />
           {isReveal && !showFull && (
             <RevealMask order={question.tileOrder} shown={tilesShown} round={rs.index} />

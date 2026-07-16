@@ -22,11 +22,26 @@ export type VersusRound = {
   tileOrder: number[];
 };
 
-export type VersusMode = "classic" | "hard" | "reveal";
+export type VersusMode = "classic" | "hard" | "reveal" | "blur";
 
 /** Reveal grid: TILE_COUNT opaque tiles uncovered over the round timer. */
 export const REVEAL_GRID_SIZE = 8;
 export const REVEAL_TILE_COUNT = REVEAL_GRID_SIZE * REVEAL_GRID_SIZE;
+
+/**
+ * Blur mode: the dial starts at MAX_BLUR_PX of CSS blur and sharpens to 0 over
+ * the round. Bump this to start harder (more blur) — perceptually a ~450px stage
+ * is already unrecognisable by ~40px, so this is the effective ceiling.
+ */
+export const MAX_BLUR_PX = 44;
+
+/** Remaining blur (px) at a given progress fraction (0 = round start, 1 = end).
+ *  Linear from MAX_BLUR_PX down to 0, clamped, rounded to whole px to avoid
+ *  sub-pixel jitter as the clock ticks. */
+export function blurPxFor(progress: number): number {
+  const clamped = Math.max(0, Math.min(1, progress));
+  return Math.round(MAX_BLUR_PX * (1 - clamped));
+}
 
 const OPTION_COUNT = 5;
 
