@@ -1,5 +1,5 @@
 import {
-  type Timestamp,
+  Timestamp,
   collection,
   doc,
   getDoc,
@@ -21,6 +21,25 @@ export const RESULTS_MS = 3_500;
 /** Points for an instant correct answer; decays linearly to 0 at the buzzer. */
 export const MAX_POINTS = 1_000;
 export const DEFAULT_ROUNDS = 5;
+/**
+ * How long a game's documents linger before Firestore reclaims them. Every match
+ * and player doc is stamped with an `expireAt` timestamp; a Firestore TTL policy
+ * on that field (on both the `matches` collection and the `players` collection
+ * group) deletes them automatically — no backend, no Cloud Functions. Games are
+ * over in minutes, so a day is plenty of slack for reconnects and rematches.
+ *
+ * TTL lives in the Google Cloud console (not Firebase), or set it via gcloud —
+ * one policy per collection group, both keyed on `expireAt`:
+ *   gcloud firestore fields ttls update expireAt --collection-group=matches --enable-ttl
+ *   gcloud firestore fields ttls update expireAt --collection-group=players --enable-ttl
+ */
+export const EXPIRE_AFTER_MS = 24 * 60 * 60 * 1_000;
+
+/** Wall-clock instant this doc should be swept, for the TTL policy. Client-clock
+ *  skew of a few seconds is irrelevant at a 24h horizon. */
+function expiry(): Timestamp {
+  return Timestamp.fromMillis(Date.now() + EXPIRE_AFTER_MS);
+}
 
 // ── Firestore document shapes ────────────────────────────────────────────────
 export type MatchStatus = "lobby" | "running" | "finished";
@@ -41,6 +60,8 @@ export type MatchDoc = {
   corpus: QuizItem[];
   gameStartedAt: Timestamp | null;
   createdAt: Timestamp | null;
+  /** When Firestore's TTL policy should reclaim this match. See EXPIRE_AFTER_MS. */
+  expireAt: Timestamp;
 };
 
 export type AnswerDoc = { choiceKey: string; answeredAt: Timestamp | null };
@@ -51,6 +72,8 @@ export type PlayerDoc = {
   joinedAt: Timestamp | null;
   lastSeen: Timestamp | null;
   answers: Record<string, AnswerDoc>;
+  /** When Firestore's TTL policy should reclaim this player doc. See EXPIRE_AFTER_MS. */
+  expireAt: Timestamp;
 };
 
 export type Player = PlayerDoc & { uid: string };
@@ -89,6 +112,7 @@ export async function createMatch(
       corpus,
       gameStartedAt: null,
       createdAt: serverTimestamp(),
+      expireAt: expiry(),
     });
     await setDoc(playerRef(code, uid), {
       name,
@@ -96,6 +120,7 @@ export async function createMatch(
       joinedAt: serverTimestamp(),
       lastSeen: serverTimestamp(),
       answers: {},
+      expireAt: expiry(),
     });
     return code;
   }
@@ -122,6 +147,7 @@ export async function joinMatch(code: string, name: string): Promise<void> {
     joinedAt: serverTimestamp(),
     lastSeen: serverTimestamp(),
     answers: {},
+    expireAt: expiry(),
   });
 }
 
