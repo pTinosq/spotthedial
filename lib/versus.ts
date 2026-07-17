@@ -28,9 +28,10 @@ export const DEFAULT_ROUNDS = 5;
  * group) deletes them automatically — no backend, no Cloud Functions. Games are
  * over in minutes, so a day is plenty of slack for reconnects and rematches.
  *
- * TTL policies must be created once in the Firebase console (or via gcloud):
- *   Firestore → TTL → Create policy → collection `matches`, field `expireAt`
- *   Firestore → TTL → Create policy → collection group `players`, field `expireAt`
+ * TTL lives in the Google Cloud console (not Firebase), or set it via gcloud —
+ * one policy per collection group, both keyed on `expireAt`:
+ *   gcloud firestore fields ttls update expireAt --collection-group=matches --enable-ttl
+ *   gcloud firestore fields ttls update expireAt --collection-group=players --enable-ttl
  */
 export const EXPIRE_AFTER_MS = 24 * 60 * 60 * 1_000;
 
