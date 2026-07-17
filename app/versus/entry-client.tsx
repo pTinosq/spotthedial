@@ -5,6 +5,19 @@ import { useState } from "react";
 import type { VersusMode } from "@/lib/quiz";
 import { materializeMatch } from "./actions";
 
+/** Remember the player's chosen name across visits — it's almost always the
+ *  same person on the same device, so re-typing it every session is friction. */
+const NAME_KEY = "spotthedial:player-name";
+
+function readSavedName(): string {
+  if (typeof window === "undefined") return "";
+  try {
+    return localStorage.getItem(NAME_KEY) ?? "";
+  } catch {
+    return "";
+  }
+}
+
 type BrandChoice = { id: string; name: string; count: number };
 
 const MODES: { id: VersusMode; title: string; blurb: string }[] = [
@@ -51,13 +64,24 @@ export function VersusSetup({
 }) {
   const router = useRouter();
   const [panel, setPanel] = useState<"create" | "join">("create");
-  const [name, setName] = useState("");
+  // Seed from the remembered name (client-only; "" on the server, so the input
+  // is marked suppressHydrationWarning for the server-empty → client-filled gap).
+  const [name, setName] = useState(readSavedName);
   const [mode, setMode] = useState<VersusMode>("classic");
   const [brand, setBrand] = useState("all");
   const [timerS, setTimerS] = useState(10);
   const [code, setCode] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  function updateName(value: string) {
+    setName(value);
+    try {
+      localStorage.setItem(NAME_KEY, value);
+    } catch {
+      // Private-mode / storage-disabled: persistence is best-effort.
+    }
+  }
 
   const choices: BrandChoice[] = [
     { id: "all", name: "All brands", count: total },
@@ -130,8 +154,9 @@ export function VersusSetup({
             <input
               type="text"
               value={name}
+              suppressHydrationWarning
               maxLength={20}
-              onChange={(e) => setName(e.target.value)}
+              onChange={(e) => updateName(e.target.value)}
               placeholder="e.g. Alex"
               className="w-full border border-rule bg-transparent px-4 py-3 font-serif text-lg tracking-tight outline-none transition-colors duration-150 focus:border-foreground"
             />
