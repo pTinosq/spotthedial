@@ -3,6 +3,13 @@ rules_version = '2';
 // Security rules for the multiplayer "versus" feature.
 // Paste into Firebase console → Firestore → Rules → Publish.
 //
+// Cleanup: matches and player docs are stamped with an `expireAt` timestamp
+// (see EXPIRE_AFTER_MS in lib/versus.ts). Create two TTL policies once, in
+// Firebase console → Firestore → TTL (or via gcloud), so old games are swept
+// automatically with no backend:
+//   • collection       `matches`  → field `expireAt`
+//   • collection group `players`  → field `expireAt`
+//
 // Integrity ceiling (by design, no paid Cloud Functions): answer *correctness*
 // is trusted from the client, and the answer key lives in the match doc. These
 // rules do lock down: auth required for all access, host-only match transitions,
