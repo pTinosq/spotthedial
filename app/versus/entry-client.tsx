@@ -21,20 +21,23 @@ function readSavedName(): string {
 type BrandChoice = { id: string; name: string; count: number };
 
 const MODES: { id: VersusMode; title: string; blurb: string }[] = [
-  { id: "classic", title: "Classic", blurb: "Multiple choice — first to name the watch scores most." },
+  { id: "classic", title: "Classic", blurb: "" },
   { id: "reveal", title: "Reveal", blurb: "The dial uncovers tile by tile in sync. Guess early to win big." },
   { id: "blur", title: "Blur", blurb: "The dial sharpens from a blur in sync. First to name it while it's soft wins." },
   { id: "hard", title: "Hard", blurb: "No options — type the answer. Fastest correct wins." },
 ];
 
-// Reveal uncovers 64 tiles over the timer and blur sharpens across it, so both
-// need longer than a snap-judgement round — hence the longer options and
-// minute(ish)-scale defaults.
-const TIMERS_BY_MODE: Record<VersusMode, number[]> = {
-  classic: [5, 10, 15, 30],
-  hard: [5, 10, 15, 30],
-  reveal: [60, 90, 120, 180],
-  blur: [5, 15, 30],
+// Per-mode timer slider range. Reveal uncovers 64 tiles over the timer and blur
+// sharpens across it, so both need longer than a snap-judgement round — hence
+// the minute(ish) scale (and coarser step) for reveal.
+const TIMER_RANGE_BY_MODE: Record<
+  VersusMode,
+  { min: number; max: number; step: number }
+> = {
+  classic: { min: 5, max: 30, step: 5 },
+  hard: { min: 5, max: 30, step: 5 },
+  reveal: { min: 60, max: 180, step: 10 },
+  blur: { min: 5, max: 30, step: 5 },
 };
 const DEFAULT_TIMER_BY_MODE: Record<VersusMode, number> = {
   classic: 10,
@@ -162,13 +165,14 @@ export function VersusSetup({
             />
           </label>
 
-          {/* Create / Join toggle */}
+          {/* Create / Join: underline tabs, so switching panels reads as
+              navigation rather than another filled option control. */}
           <div
             role="tablist"
             aria-label="Create or join"
-            className="mt-10 grid grid-cols-2 border border-rule"
+            className="mt-10 flex gap-8 border-b border-rule"
           >
-            {(["create", "join"] as const).map((p, i) => {
+            {(["create", "join"] as const).map((p) => {
               const selected = p === panel;
               return (
                 <button
@@ -177,12 +181,10 @@ export function VersusSetup({
                   role="tab"
                   aria-selected={selected}
                   onClick={() => setPanel(p)}
-                  className={`cursor-pointer px-4 py-3 text-center font-serif text-lg tracking-tight transition-colors duration-150 ${
-                    i > 0 ? "border-l border-rule" : ""
-                  } ${
+                  className={`-mb-px cursor-pointer border-b-2 pb-3 font-serif text-lg tracking-tight transition-colors duration-150 ${
                     selected
-                      ? "bg-foreground text-background"
-                      : "text-foreground hover:bg-foreground/5"
+                      ? "border-foreground text-foreground"
+                      : "border-transparent text-muted hover:text-foreground"
                   }`}
                 >
                   {p === "create" ? "Create a match" : "Join a match"}
@@ -194,7 +196,7 @@ export function VersusSetup({
           {panel === "create" ? (
             <section className="mt-8">
               <p className="mb-3 text-xs uppercase tracking-[0.18em] text-muted">
-                Game
+                Game mode
               </p>
             <div role="radiogroup" className="grid grid-cols-4 border border-rule">
               {MODES.map((m, i) => {
@@ -222,9 +224,11 @@ export function VersusSetup({
                 );
               })}
             </div>
-            <p className="mt-3 text-sm text-muted">
-              {MODES.find((m) => m.id === mode)?.blurb}
-            </p>
+            {MODES.find((m) => m.id === mode)?.blurb && (
+              <p className="mt-3 text-sm text-muted">
+                {MODES.find((m) => m.id === mode)?.blurb}
+              </p>
+            )}
 
             <p className="mt-8 mb-3 text-xs uppercase tracking-[0.18em] text-muted">
               Brand
@@ -260,36 +264,27 @@ export function VersusSetup({
               })}
             </div>
 
-            <p className="mt-8 mb-3 text-xs uppercase tracking-[0.18em] text-muted">
-              Time per watch
-            </p>
-            <div
-              role="radiogroup"
-              className={`grid border border-rule ${
-                TIMERS_BY_MODE[mode].length === 3 ? "grid-cols-3" : "grid-cols-4"
-              }`}
-            >
-              {TIMERS_BY_MODE[mode].map((t, i) => {
-                const selected = t === timerS;
-                return (
-                  <button
-                    key={t}
-                    type="button"
-                    role="radio"
-                    aria-checked={selected}
-                    onClick={() => setTimerS(t)}
-                    className={`cursor-pointer px-3 py-3 font-serif text-lg tracking-tight tabular-nums transition-colors duration-150 ${
-                      i > 0 ? "border-l border-rule" : ""
-                    } ${
-                      selected
-                        ? "bg-foreground text-background"
-                        : "hover:bg-foreground/5"
-                    }`}
-                  >
-                    {formatTimer(t)}
-                  </button>
-                );
-              })}
+            <div className="mt-8 mb-3 flex items-baseline justify-between">
+              <p className="text-xs uppercase tracking-[0.18em] text-muted">
+                Time per watch
+              </p>
+              <p className="font-serif text-lg tracking-tight tabular-nums">
+                {formatTimer(timerS)}
+              </p>
+            </div>
+            <input
+              type="range"
+              min={TIMER_RANGE_BY_MODE[mode].min}
+              max={TIMER_RANGE_BY_MODE[mode].max}
+              step={TIMER_RANGE_BY_MODE[mode].step}
+              value={timerS}
+              onChange={(e) => setTimerS(Number(e.target.value))}
+              aria-label="Time per watch"
+              className="w-full cursor-pointer accent-foreground"
+            />
+            <div className="mt-1 flex justify-between text-xs text-muted tabular-nums">
+              <span>{formatTimer(TIMER_RANGE_BY_MODE[mode].min)}</span>
+              <span>{formatTimer(TIMER_RANGE_BY_MODE[mode].max)}</span>
             </div>
 
             <div className="mt-8 flex justify-end">
