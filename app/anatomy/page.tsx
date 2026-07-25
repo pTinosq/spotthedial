@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { AnatomyClient } from "./anatomy-client";
@@ -7,7 +9,20 @@ export const metadata: Metadata = {
   description: "Learn the vocabulary of a watch, part by part.",
 };
 
+/** The hand-authored watch, inlined so its parts can be highlighted individually. */
+function watchInnerSvg(): string {
+  const raw = readFileSync(
+    join(process.cwd(), "public/anatomy/watch.svg"),
+    "utf8",
+  );
+  return raw
+    .replace(/^[\s\S]*?<svg[^>]*>/, "") // drop the outer <svg> wrapper…
+    .replace(/<\/svg>\s*$/, "") // …and its close…
+    .replace(/<rect[^>]*fill="white"[^>]*\/>/, ""); // …and the opaque backdrop.
+}
+
 export default function AnatomyPage() {
+  const watchSvg = watchInnerSvg();
   return (
     <main className="mx-auto w-full max-w-5xl px-6 py-12 sm:py-20">
       <nav className="mb-8 text-xs uppercase tracking-[0.18em] text-muted">
@@ -26,7 +41,7 @@ export default function AnatomyPage() {
         </p>
       </header>
 
-      <AnatomyClient />
+      <AnatomyClient watchSvg={watchSvg} />
     </main>
   );
 }

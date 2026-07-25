@@ -13,7 +13,7 @@ const VERSIONS = [
 
 type VersionId = (typeof VERSIONS)[number]["id"];
 
-export function AnatomyClient() {
+export function AnatomyClient({ watchSvg }: { watchSvg: string }) {
   const [version, setVersion] = useState<VersionId>("v1");
   const current = VERSIONS.find((v) => v.id === version)!;
 
@@ -42,7 +42,7 @@ export function AnatomyClient() {
         <span className="ml-auto text-xs text-muted">{current.note}</span>
       </div>
 
-      {version === "v1" && <AnatomyV1 />}
+      {version === "v1" && <AnatomyV1 watchSvg={watchSvg} />}
       {version === "v2" && <AnatomyV2 />}
       {version === "v3" && <AnatomyV3 />}
     </div>
