@@ -13,18 +13,26 @@ export default function Home() {
         <p className="font-serif text-xl tracking-tight sm:text-2xl">
           Spot the Dial
         </p>
-        <Link
-          href="/quiz"
-          className="group inline-flex items-center gap-2 border border-foreground bg-foreground px-4 py-2 font-serif text-sm tracking-tight text-background transition-opacity duration-150 hover:opacity-80 sm:text-base"
-        >
-          Play a game
-          <span
-            aria-hidden="true"
-            className="transition-transform duration-150 group-hover:translate-x-0.5"
+        <div className="flex items-center gap-4 sm:gap-6">
+          <Link
+            href="/anatomy"
+            className="text-sm text-muted transition-colors hover:text-foreground sm:text-base"
           >
-            →
-          </span>
-        </Link>
+            Anatomy
+          </Link>
+          <Link
+            href="/quiz"
+            className="group inline-flex items-center gap-2 border border-foreground bg-foreground px-4 py-2 font-serif text-sm tracking-tight text-background transition-opacity duration-150 hover:opacity-80 sm:text-base"
+          >
+            Play a game
+            <span
+              aria-hidden="true"
+              className="transition-transform duration-150 group-hover:translate-x-0.5"
+            >
+              →
+            </span>
+          </Link>
+        </div>
       </div>
 
       <section>
