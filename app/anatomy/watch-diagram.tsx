@@ -58,11 +58,11 @@ const LEAF_IDS = [
 const rowY = (i: number) => ROW_TOP + i * ROW_STEP;
 
 /**
- * v1 — Connectors. The authored watch is inlined so each part can be faded or
- * lit; hovering a term draws a leader line to it, clicking pins it (click again
- * to unpin). "Case" lights up its lugs and bezel together.
+ * The interactive anatomy diagram. The authored watch is inlined so each part
+ * can be faded or lit; hovering a term draws a leader line to it, clicking pins
+ * it (click again to unpin). "Case" lights up its lugs and bezel together.
  */
-export function AnatomyV1({ watchSvg }: { watchSvg: string }) {
+export function AnatomyDiagram({ watchSvg }: { watchSvg: string }) {
   const [hover, setHover] = useState<PartId | null>(null);
   const [pinned, setPinned] = useState<PartId | null>(null);
   const active = hover ?? pinned;

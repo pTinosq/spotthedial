@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { AnatomyClient } from "./anatomy-client";
+import { AnatomyDiagram } from "./watch-diagram";
 
 export const metadata: Metadata = {
   title: "Anatomy of a watch — Spot the Dial",
@@ -36,12 +36,11 @@ export default function AnatomyPage() {
           Anatomy of a watch
         </h1>
         <p className="mt-3 text-base leading-relaxed text-muted">
-          The vocabulary, part by part. Three ways to explore it — pick whichever
-          clicks.
+          The vocabulary, part by part. Hover a term to find it on the watch.
         </p>
       </header>
 
-      <AnatomyClient watchSvg={watchSvg} />
+      <AnatomyDiagram watchSvg={watchSvg} />
     </main>
   );
 }
