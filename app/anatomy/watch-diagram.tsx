@@ -42,6 +42,30 @@ const LEAF_IDS = [
   "date",
 ];
 
+/**
+ * Opacity is driven by CSS keyed off `data-active` on the <svg>, not by mutating
+ * the inlined groups directly: the leader-line measurement re-renders on every
+ * hover, and React recreates the `dangerouslySetInnerHTML` subtree on re-render,
+ * which would wipe any imperatively-set inline styles. CSS on the ids survives it.
+ */
+const DIM_CSS = [
+  `${LEAF_IDS.map((id) => `#${id}`).join(
+    ",",
+  )}{transition:opacity .35s ease,filter .35s ease}`,
+  ...ROWS.flatMap((r) => {
+    const dimmed = LEAF_IDS.filter((id) => !r.highlight.includes(id));
+    const sel = (ids: string[]) =>
+      ids.map((id) => `svg[data-active="${r.id}"] #${id}`).join(",");
+    return [
+      `${sel(dimmed)}{opacity:.1}`,
+      // Halo on the lit part so it lifts off the drawing.
+      `${sel(
+        r.highlight,
+      )}{filter:drop-shadow(0 0 14px rgba(26,26,26,.5)) drop-shadow(0 0 6px rgba(26,26,26,.4))}`,
+    ];
+  }),
+].join("\n");
+
 type Line = { x1: number; y1: number; x2: number; y2: number };
 
 /**
@@ -69,21 +93,6 @@ export function AnatomyDiagram({ watchSvg }: { watchSvg: string }) {
   const [isDesktop, setIsDesktop] = useState(false);
   const [line, setLine] = useState<Line | null>(null);
   const [overlay, setOverlay] = useState({ w: 0, h: 0 });
-
-  // Drive per-part opacity directly on the inlined SVG's groups.
-  useEffect(() => {
-    const root = gRef.current;
-    if (!root) return;
-    const lit = active
-      ? new Set(ROWS.find((r) => r.id === active)?.highlight)
-      : null;
-    for (const id of LEAF_IDS) {
-      const el = root.querySelector<SVGElement>(`#${CSS.escape(id)}`);
-      if (!el) continue;
-      el.style.transition = "opacity .35s ease";
-      el.style.opacity = lit ? (lit.has(id) ? "1" : "0.1") : "1";
-    }
-  }, [active]);
 
   // Track the breakpoint (connector line is desktop-only).
   useEffect(() => {
@@ -138,7 +147,9 @@ export function AnatomyDiagram({ watchSvg }: { watchSvg: string }) {
             className="w-full select-none"
             role="img"
             aria-label="Line drawing of a watch"
+            data-active={active ?? ""}
           >
+            <style>{DIM_CSS}</style>
             <g ref={gRef} fill="none" dangerouslySetInnerHTML={{ __html: watchSvg }} />
           </svg>
         </div>
